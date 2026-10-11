@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>OfferPilot Form Filler</title>
+<style>
+  /* same identity as the app: navy, gold, squared shapes */
+  body{font:14px/1.45 Archivo,"Helvetica Neue",Arial,sans-serif;width:330px;margin:0;color:#0D1B33;background:#fff}
+  header{display:flex;align-items:center;gap:9px;padding:11px 14px;background:#0B1A3B;color:#fff}
+  header svg{display:block;width:24px;height:24px}
+  h1{font-size:15px;font-weight:700;margin:0}main{padding:10px 14px 14px}
+  p{margin:6px 0}.muted{color:#5D6982;font-size:12.5px}
+  label{display:block;font-weight:600;font-size:12.5px;margin:10px 0 4px;color:#3C4963}
+  select,input{width:100%;box-sizing:border-box;padding:8px;border:1px solid #BDC6D5;border-radius:4px;font:inherit;color:inherit;background:#fff}
+  button{width:100%;margin-top:12px;padding:10px;border:1px solid #C28E00;border-radius:4px;background:#F5B301;color:#0B1A3B;font:inherit;font-weight:700;cursor:pointer}
+  button:hover{background:#FFC933}button:disabled{opacity:.55;cursor:default}
+  button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid #1B4FD8;outline-offset:2px}
+  #out{margin-top:10px;font-size:13px}.ok{color:#0A7548}.err{color:#B9242F}ul{margin:4px 0 0 18px;padding:0}
+  details{margin-top:10px;font-size:12.5px}summary{cursor:pointer}
+</style></head>
+<body>
+  <header><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="6" fill="#F5B301"/><path d="M8 20.5 16 8l8 12.5-8-3.2z" fill="#0B1A3B"/><path d="M16 17.3v6.7" stroke="#0B1A3B" stroke-width="2.2" stroke-linecap="round"/></svg><h1>OfferPilot Form Filler</h1></header>
+  <main>
+  <p class="muted" id="who">Connecting to the app on your computer…</p>
+  <label for="app">Use the cover letter from</label>
+  <select id="app"><option value="">No cover letter — contact details only</option></select>
+  <button id="fill" disabled>Fill this form</button>
+  <div id="out" role="status" aria-live="polite"></div>
+  <p class="muted">It fills empty fields only. Check everything, answer the remaining questions, then press Submit yourself.</p>
+  <details><summary>App address</summary><label for="base">Where OfferPilot is running</label><input id="base" placeholder="http://127.0.0.1:8000">
+    <label for="token">Dashboard token (only if you set one)</label><input id="token" type="password"></details>
+  </main>
+  <script src="popup.js"></script>
+</body></html>

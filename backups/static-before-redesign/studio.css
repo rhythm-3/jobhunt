@@ -1,0 +1,231 @@
+/* Studio: the default look. A calm work tool: cool white canvas, ruled lists instead of floating cards, one evergreen accent,
+   Newsreader for page titles and large figures, Instrument Sans for the interface. "night" is its dark counterpart.
+   Everything is scoped to [data-ui=studio], so the older themes are untouched. */
+
+:root[data-ui=studio]{
+  --bg:#F7F8FA;--panel:#FFFFFF;--panel-2:#F0F2F5;--ink:#14181F;--ink-2:#3B4452;--mute:#5F6978;--line:#E2E6EB;
+  --accent:#0E6B56;--accent-ink:#FFFFFF;--violet:#5746AF;--violet-bg:#EFEDFB;--emerald:#0E6B56;--emerald-bg:#E3F3EE;
+  --amber:#8F5300;--amber-bg:#FCF1DC;--rose:#B4233C;--rose-bg:#FCE9EC;--sky:#1F5FA8;--sky-bg:#E6F0FB;
+  --shadow:none;--shadow-lg:0 14px 44px rgba(20,24,31,.16),0 2px 6px rgba(20,24,31,.06);--r:12px;
+  --ui:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --title:"Newsreader","Iowan Old Style",Georgia,serif;color-scheme:light}
+:root[data-skin=night]{
+  --bg:#0E1216;--panel:#151A20;--panel-2:#1D242C;--ink:#E9EDF2;--ink-2:#C2CAD4;--mute:#8D98A6;--line:#28313B;
+  --accent:#4FC3A1;--accent-ink:#06231B;--violet:#B3A6F5;--violet-bg:#25203F;--emerald:#4FC3A1;--emerald-bg:#12332A;
+  --amber:#E5B454;--amber-bg:#33280F;--rose:#F08A99;--rose-bg:#3A1820;--sky:#7DB7F0;--sky-bg:#14283D;
+  --shadow-lg:0 16px 50px rgba(0,0,0,.55),0 2px 6px rgba(0,0,0,.3);color-scheme:dark}
+:root[data-ui=studio][data-contrast=high]{--mute:#3B4452;--line:#AEB6C1}
+:root[data-skin=night][data-contrast=high]{--mute:#C2CAD4;--line:#56626F}
+
+:root[data-ui=studio] body{background:var(--bg);font-family:var(--ui);font-size:14.5px;line-height:1.5;font-feature-settings:"tnum" 0}
+:root[data-ui=studio] button,:root[data-ui=studio] input,:root[data-ui=studio] select,:root[data-ui=studio] textarea{font-family:var(--ui)}
+:root[data-ui=studio] a{color:var(--accent)}
+:root[data-ui=studio] :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ---- take the decoration away */
+:root[data-ui=studio] body::after,:root[data-ui=studio] body::before,:root[data-ui=studio] .card::after,:root[data-ui=studio] .stage::before,
+:root[data-ui=studio] .pagehead::before,:root[data-ui=studio] .pagebadge,:root[data-ui=studio] .hero .card::after,:root[data-ui=studio] .stage:not(:last-child)::after{display:none}
+:root[data-ui=studio] .jrow:hover,:root[data-ui=studio] .orow:hover,:root[data-ui=studio] .stage:hover,:root[data-ui=studio] .cohead:hover,:root[data-ui=studio] .prow:hover,
+:root[data-ui=studio] .step:hover,:root[data-ui=studio] .co:hover,:root[data-ui=studio] .li:hover,:root[data-ui=studio] .mailmini:hover{background-image:none;transform:none;box-shadow:none}
+
+/* ---- labels are sentence case everywhere */
+:root[data-ui=studio] .navlabel,:root[data-ui=studio] h4,:root[data-ui=studio] h5,:root[data-ui=studio] .lab,:root[data-ui=studio] .agrid-h,:root[data-ui=studio] .sev,
+:root[data-ui=studio] .fc .cap,:root[data-ui=studio] .mode{text-transform:none;letter-spacing:0}
+:root[data-ui=studio] h4,:root[data-ui=studio] h5,:root[data-ui=studio] .agrid-h{font-size:13px;font-weight:600;color:var(--ink-2)}
+
+/* ---- shell */
+:root[data-ui=studio] .side{background:var(--panel);border-right:1px solid var(--line);padding:16px 12px}
+:root[data-ui=studio] .brand{font-family:var(--title);font-size:20px;font-weight:600;letter-spacing:-.01em;padding:2px 8px 18px}
+:root[data-ui=studio] .navgroup{margin-bottom:14px}
+:root[data-ui=studio] .navlabel{font-size:12.5px;font-weight:600;color:var(--mute);padding:6px 10px 4px}
+:root[data-ui=studio] .nav{border-radius:8px;padding:8px 10px;font-weight:500;color:var(--ink-2)}
+:root[data-ui=studio] .nav:hover{background:var(--panel-2);transform:none}
+:root[data-ui=studio] .nav[aria-current=page]{background:var(--panel-2);color:var(--ink);font-weight:600;box-shadow:inset 3px 0 0 var(--accent)}
+:root[data-ui=studio] .nav[aria-current=page] svg{color:var(--accent)}
+:root[data-ui=studio] .nav .count{background:transparent;color:var(--mute);font-weight:600;font-size:12.5px;padding:0}
+:root[data-ui=studio] .mode{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--ink-2);font-weight:600;font-size:13px;padding:6px 8px}
+:root[data-ui=studio] .mode::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--emerald)}
+:root[data-ui=studio] .mode.live::before{background:var(--rose)}
+:root[data-ui=studio] .top{background:color-mix(in srgb,var(--bg) 92%,transparent);border-bottom:1px solid var(--line);padding:10px 28px;backdrop-filter:blur(8px)}
+:root[data-ui=studio] .gsearch{border-radius:8px;background:var(--panel);border:1px solid var(--line);color:var(--mute);padding:8px 12px}
+:root[data-ui=studio] .pill{border-radius:8px;background:transparent;border:1px solid var(--line);font-size:13px}
+:root[data-ui=studio] .icon-btn{border-radius:8px}:root[data-ui=studio] .icon-btn:hover{background:var(--panel-2)}
+:root[data-ui=studio] .kbd{font:600 11px var(--ui);border-radius:5px}
+
+:root[data-ui=studio] .pagehead{padding:30px 28px 0;align-items:flex-end}
+:root[data-ui=studio] .pagehead h1{font-family:var(--title);font-size:34px;font-weight:500;letter-spacing:-.015em;line-height:1.1;background:none;-webkit-text-fill-color:currentColor;color:var(--ink)}
+:root[data-ui=studio] .pagehead p{font-size:15px;color:var(--mute);margin-top:6px}
+:root[data-ui=studio] .content{padding:22px 28px 60px}
+:root[data-ui=studio] .hello{color:var(--mute);margin:0 0 18px}
+
+/* ---- surfaces: one border, no shadow; only floating things cast one */
+:root[data-ui=studio] .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:none}
+:root[data-ui=studio] .card h3{font-size:15.5px;font-weight:600;letter-spacing:0}
+:root[data-ui=studio] .drawer,:root[data-ui=studio] .cmdk,:root[data-ui=studio] .statuspop,:root[data-ui=studio] .bellpop,:root[data-ui=studio] .acctpop,
+:root[data-ui=studio] .askpanel,:root[data-ui=studio] .pop{box-shadow:var(--shadow-lg)}
+
+/* ---- controls */
+:root[data-ui=studio] .btn{border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-weight:600;font-size:13.5px;box-shadow:none;background-image:none}
+:root[data-ui=studio] .btn:hover{background:var(--panel-2);transform:none;box-shadow:none}
+:root[data-ui=studio] .btn.primary,:root[data-ui=studio] .btn.success{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+:root[data-ui=studio] .btn.primary:hover,:root[data-ui=studio] .btn.success:hover{background:color-mix(in srgb,var(--accent) 88%,#000)}
+:root[data-ui=studio] .btn.ghost{background:transparent;border-color:transparent}:root[data-ui=studio] .btn.ghost:hover{background:var(--panel-2)}
+:root[data-ui=studio] .btn.danger{color:var(--rose)}
+:root[data-ui=studio] .btn.sm{border-radius:7px;font-size:13px}
+:root[data-ui=studio] .btn.primary .kbd{background:rgba(255,255,255,.18);color:inherit}
+:root[data-ui=studio] .input,:root[data-ui=studio] .select,:root[data-ui=studio] .textarea,:root[data-ui=studio] .tags{border-radius:8px;border:1px solid var(--line);background:var(--panel);box-shadow:none}
+:root[data-ui=studio] .input:focus,:root[data-ui=studio] .select:focus,:root[data-ui=studio] .textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent);outline:0}
+:root[data-ui=studio] .chip{border-radius:6px;font-weight:600;font-size:12px;padding:2px 8px}
+:root[data-ui=studio] .linkbtn{color:var(--accent)}
+:root[data-ui=studio] .seg{border-radius:8px;background:var(--panel-2);padding:3px}
+:root[data-ui=studio] .seg button{border-radius:6px;font-weight:500}
+:root[data-ui=studio] .seg button[aria-pressed=true]{background:var(--panel);color:var(--ink);font-weight:600;box-shadow:0 0 0 1px var(--line)}
+:root[data-ui=studio] .tplbtn{border-radius:8px}
+
+/* ---- tabs are underlined, not pills */
+:root[data-ui=studio] .tabsbar{gap:26px;border-bottom:1px solid var(--line);margin-bottom:18px;align-items:flex-end}
+:root[data-ui=studio] .tabsbar button{border:0;border-radius:0;background:none;padding:10px 0 11px;color:var(--mute);font-weight:500;margin-bottom:-1px;box-shadow:none;transform:none}
+:root[data-ui=studio] .tabsbar button:hover{color:var(--ink);transform:none}
+:root[data-ui=studio] .tabsbar button[aria-selected=true]{background:none;color:var(--ink);font-weight:600;box-shadow:inset 0 -2px 0 var(--accent)}
+:root[data-ui=studio] .tabsbar .n{background:none;padding:0;min-width:0;color:var(--mute);font-family:var(--ui);font-weight:500}
+:root[data-ui=studio] .tabsbar .tabmore{border:0;background:transparent;padding:9px 0;margin-bottom:1px;color:var(--mute);border-radius:0}
+
+/* ---- lists are ruled rows inside one container */
+:root[data-ui=studio] .list{gap:0;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+:root[data-ui=studio] .list>.card{border:0;border-radius:0;border-bottom:1px solid var(--line);background:transparent;animation:none}
+:root[data-ui=studio] .list>.card:last-child{border-bottom:0}
+:root[data-ui=studio] .list>.jrow:hover,:root[data-ui=studio] .list>.orow:hover,:root[data-ui=studio] .list>.li.clickable:hover,:root[data-ui=studio] .cohead:hover,:root[data-ui=studio] .prow:hover{background:var(--panel-2)}
+:root[data-ui=studio] .list>.empty{padding:48px 20px}
+:root[data-ui=studio] .jrow h3,:root[data-ui=studio] .orow h3,:root[data-ui=studio] .coname{font-size:15px;font-weight:600}
+:root[data-ui=studio] .cogroup{padding:0}
+:root[data-ui=studio] .cobody{background:var(--bg);padding:0 0 0 78px;gap:0;border-top:1px solid var(--line)}
+:root[data-ui=studio] .cobody .jrow{margin:0;border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;padding:12px 18px 12px 0}
+:root[data-ui=studio] .cobody .jrow:last-child{border-bottom:0}
+:root[data-ui=studio] .chev{color:var(--mute)}
+:root[data-ui=studio] .av{border-radius:10px;font-weight:700;background:hsl(var(--h,220) 42% 92%);color:hsl(var(--h,220) 45% 30%)}
+:root[data-skin=night] .av{background:hsl(var(--h,220) 28% 22%);color:hsl(var(--h,220) 60% 82%)}
+:root[data-ui=studio] .sring b{font-family:var(--ui)}
+:root[data-ui=studio] .morebar{margin-top:18px}
+
+/* ---- the pipeline is one continuous track */
+:root[data-ui=studio] .journey{gap:0;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:28px}
+:root[data-ui=studio] .stage{display:flex;flex-direction:column;border:0;border-radius:0;background:transparent;box-shadow:0 0 0 .5px var(--line);padding:18px 22px 16px;animation:none;min-height:168px}
+:root[data-ui=studio] .stage:hover{background:var(--panel-2)}
+:root[data-ui=studio] .stage .sico{display:none}
+:root[data-ui=studio] .stage .sl{order:-1;font-size:13.5px;font-weight:600;color:var(--ink-2);margin:0;display:flex;align-items:center;gap:8px}
+:root[data-ui=studio] .stage .sl::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--tc,var(--accent));flex:none}
+:root[data-ui=studio] .stage b{font-family:var(--title);font-size:46px;font-weight:500;line-height:1.05;letter-spacing:-.02em;margin-top:8px}
+:root[data-ui=studio] .stage small{font-size:13px;color:var(--mute)}
+:root[data-ui=studio] .stage .spark,:root[data-ui=studio] .stage .sbar{margin-top:auto}
+:root[data-ui=studio] .stage.t-sky{--tc:var(--sky)}:root[data-ui=studio] .stage.t-violet{--tc:var(--violet)}:root[data-ui=studio] .stage.t-accent{--tc:var(--accent)}
+:root[data-ui=studio] .hero b,:root[data-ui=studio] .salnums b,:root[data-ui=studio] .oqs b{font-family:var(--title);font-weight:500;letter-spacing:-.01em}
+:root[data-ui=studio] .hero b{font-size:34px}
+
+/* ---- dashboard */
+:root[data-ui=studio] h2.h{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:12px}
+:root[data-ui=studio] .steps{gap:0;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+:root[data-ui=studio] .step{border:0;border-radius:0;border-bottom:1px solid var(--line);background:transparent;animation:none;padding:14px 18px}
+:root[data-ui=studio] .step:last-child{border-bottom:0}
+:root[data-ui=studio] .sico{width:34px;height:34px;border-radius:8px}
+:root[data-ui=studio] .agrid i{border-radius:2px}
+
+/* ---- job panel and dialogs */
+:root[data-ui=studio] .scrim,:root[data-ui=studio] .cmdk-scrim{background:rgba(20,24,31,.38);backdrop-filter:none}
+:root[data-ui=studio] .drawer{background:var(--bg);border-left:1px solid var(--line)}
+:root[data-ui=studio] .dh{background:var(--panel);background-image:none;padding:18px 24px}
+:root[data-ui=studio] .dh h2{font-family:var(--title);font-size:24px;font-weight:500;letter-spacing:-.01em}
+:root[data-ui=studio] .df,:root[data-ui=studio] .stepper,:root[data-ui=studio] .checks{background:var(--panel)}
+:root[data-ui=studio] .tabs .ink{background:var(--accent)}
+:root[data-ui=studio] .cmdk{background:var(--panel);border:1px solid var(--line);border-radius:14px}
+:root[data-ui=studio] .toast{background:var(--ink);color:var(--bg);border:0;border-radius:8px;box-shadow:var(--shadow-lg)}
+:root[data-ui=studio] .savebar{background:var(--ink);color:var(--bg);border:0;border-radius:10px}
+:root[data-ui=studio] .updpill{border-radius:8px}
+:root[data-ui=studio] .askfab{background:var(--ink);color:var(--bg);box-shadow:var(--shadow-lg);border-radius:10px;padding:11px 16px}
+:root[data-ui=studio] .askmsg.me{background:var(--emerald-bg)}
+:root[data-ui=studio] .qrcard,:root[data-ui=studio] .vcard,:root[data-ui=studio] .bdcard{border-radius:10px}
+:root[data-ui=studio] .okbox,:root[data-ui=studio] .warnbox{border-radius:10px}
+:root[data-ui=studio] .sendbar{border-color:var(--line)}
+
+@media (max-width:900px){
+  :root[data-ui=studio] .top{padding:10px 16px}:root[data-ui=studio] .pagehead{padding:20px 16px 0}:root[data-ui=studio] .pagehead h1{font-size:27px}
+  :root[data-ui=studio] .content{padding:16px 16px 150px}:root[data-ui=studio] .side{border-right:0;border-top:1px solid var(--line);padding:6px 2px}
+  :root[data-ui=studio] .nav[aria-current=page]{box-shadow:inset 0 3px 0 var(--accent);background:transparent}
+  :root[data-ui=studio] .stage{min-height:0}:root[data-ui=studio] .stage b{font-size:36px}:root[data-ui=studio] .cobody{padding-left:14px}
+  :root[data-ui=studio] .tabsbar{gap:18px;overflow-x:auto;flex-wrap:nowrap}:root[data-ui=studio] .tabsbar button{white-space:nowrap}
+}
+
+/* ---- refinements */
+:root[data-ui=studio] body{word-spacing:.04em}
+:root[data-ui=studio] .blogo svg rect{fill:var(--accent)}
+:root[data-ui=studio] .acav{background:var(--panel-2);color:var(--ink);box-shadow:0 0 0 1px var(--line)}
+:root[data-ui=studio] .toolbar .search{min-width:260px}
+:root[data-ui=studio] .agrid,:root[data-ui=studio] .agrid-key{max-width:290px}
+:root[data-ui=studio] .agrid i,:root[data-ui=studio] .agrid-key i{box-shadow:none}
+:root[data-ui=studio] .stage{min-height:0}
+:root[data-ui=studio] .toolbar .sweeplbl{order:20;flex-basis:100%}
+:root[data-ui=studio] .toolbar .grow{display:block}
+/* a resume is always a white sheet of paper, in the dark version too */
+:root[data-skin=night] .resume{--ink:#14181F;--ink-2:#3B4452;--mute:#5F6978;--line:#E2E6EB;--panel:#FFFFFF;--panel-2:#F0F2F5;--emerald:#0E6B56;--emerald-bg:#E3F3EE;
+  --violet:#5746AF;--violet-bg:#EFEDFB;--rose:#B4233C;background:#FFFFFF;color:#14181F}
+@media (max-width:900px){
+  :root[data-ui=studio] .side .nav .count{background:var(--accent);color:var(--accent-ink);border-radius:8px;padding:0 5px;font-size:10px;line-height:15px;left:auto;right:calc(50% - 22px);top:3px;margin:0}
+  :root[data-ui=studio] .linkchip{min-height:28px}
+}
+
+/* ================= room to breathe ================= */
+/* one centred column, wider margins, and a clear gap between every block */
+:root[data-ui=studio] .pagehead,:root[data-ui=studio] .content{max-width:1220px;margin-inline:auto;width:100%}
+:root[data-ui=studio] .pagehead{padding:44px 44px 0}
+:root[data-ui=studio] .content{padding:30px 44px 96px}
+:root[data-ui=studio] .pagehead h1{font-size:36px}:root[data-ui=studio] .pagehead p{margin-top:8px}
+:root[data-ui=studio] .hello,:root[data-ui=studio] .copreview,:root[data-ui=studio] .sring em,:root[data-ui=studio] .cohead .jside>.small,
+:root[data-ui=studio] .ostrip .oqs .small,:root[data-ui=studio] .outreach>p.small.muted:not(.osafe){display:none}
+:root[data-ui=studio] .tabsbar{margin-bottom:26px;gap:30px}
+:root[data-ui=studio] .toolbar{margin-bottom:18px;gap:12px}
+:root[data-ui=studio] .journey{margin-bottom:44px}
+:root[data-ui=studio] .stage{padding:22px 26px 20px}
+:root[data-ui=studio] .homegrid{gap:44px}:root[data-ui=studio] .homegrid aside{gap:24px}
+:root[data-ui=studio] .homegrid section>h2.h{margin-top:40px}:root[data-ui=studio] .homegrid section>h2.h:first-child{margin-top:0}
+:root[data-ui=studio] .sec{padding:26px 28px}
+:root[data-ui=studio] .step{padding:18px 22px;gap:16px}
+/* rows: taller, fewer things in them */
+:root[data-ui=studio] .jrow,:root[data-ui=studio] .orow,:root[data-ui=studio] .list>.li{padding:20px 24px;gap:18px}
+:root[data-ui=studio] .cohead{padding:20px 24px;gap:18px}
+:root[data-ui=studio] .cobody{padding-left:88px}:root[data-ui=studio] .cobody .jrow{padding:16px 24px 16px 0}
+:root[data-ui=studio] .jsub{margin-top:4px;color:var(--mute)}
+:root[data-ui=studio] .jrow .meta,:root[data-ui=studio] .orow .meta{margin-top:10px}
+:root[data-ui=studio] .jside{gap:22px}
+:root[data-ui=studio] .sring{width:44px;height:44px}
+/* inbox: two lines of the email, not three */
+:root[data-ui=studio] .mail .body{-webkit-line-clamp:2;margin-top:10px;font-size:14px;max-width:86ch}
+:root[data-ui=studio] .mail h3{font-size:15px;margin-top:8px}
+/* job panel */
+:root[data-ui=studio] .pane{padding:28px 30px}:root[data-ui=studio] .dh{padding:22px 30px}:root[data-ui=studio] .df{padding:16px 30px}:root[data-ui=studio] .stepper{padding:14px 30px}
+:root[data-ui=studio] .jd{line-height:1.75;max-width:70ch}
+:root[data-ui=studio] mark.k{background:var(--emerald-bg);color:var(--emerald);font-weight:600}
+:root[data-ui=studio] mark.m{background:var(--amber-bg);color:var(--amber);text-decoration:none;border-radius:4px;padding:0 2px;font-weight:600}
+:root[data-ui=studio] .vcard{padding:18px 20px;margin-bottom:22px}
+:root[data-ui=studio] .tabs{gap:10px;margin-bottom:22px}
+/* settings */
+:root[data-ui=studio] .issues.short li:nth-child(n+4){display:none}
+:root[data-ui=studio] .issues li{padding:14px 16px}
+:root[data-ui=studio] .proextras{gap:24px;margin:24px 0}
+:root[data-ui=studio] .hbars>div{padding:3px 0}
+:root[data-ui=studio] .field{margin-bottom:20px}
+/* insights and outreach */
+:root[data-ui=studio] .hero{gap:16px;margin-bottom:28px}:root[data-ui=studio] .hero .card{padding:22px 24px}
+:root[data-ui=studio] .insights{gap:24px}:root[data-ui=studio] .viz-card{padding:26px 28px}
+:root[data-ui=studio] .ostrip{padding:22px 28px;gap:44px;margin-bottom:28px}:root[data-ui=studio] .omodes{margin-bottom:24px}
+:root[data-ui=studio] .fpanel{padding:20px 24px;gap:14px 28px;margin-bottom:18px}
+@media (max-width:900px){
+  :root[data-ui=studio] .pagehead{padding:24px 18px 0}:root[data-ui=studio] .content{padding:20px 18px 150px}:root[data-ui=studio] .pagehead h1{font-size:28px}
+  :root[data-ui=studio] .jrow,:root[data-ui=studio] .orow,:root[data-ui=studio] .list>.li,:root[data-ui=studio] .cohead{padding:16px}
+  :root[data-ui=studio] .cobody{padding-left:16px}:root[data-ui=studio] .homegrid{gap:28px}:root[data-ui=studio] .sec{padding:18px}
+  :root[data-ui=studio] .pane{padding:18px}:root[data-ui=studio] .tabsbar{gap:20px}
+}
+:root[data-ui=studio] .mail .btn.success{background:var(--panel);border-color:var(--line);color:var(--ink)}
+:root[data-ui=studio] .mail .btn.success:hover{background:var(--panel-2)}
+:root[data-ui=studio] .mail .row:last-child{margin-top:14px}
+:root[data-ui=studio] .resume .chip{white-space:normal;text-align:left}
+:root[data-ui=studio] .pagehead,:root[data-ui=studio] .content{box-sizing:border-box}:root[data-ui=studio] .view>*{min-width:0}
+:root[data-ui=studio] .view>div>*{min-width:0}:root[data-ui=studio] .drop{overflow-wrap:anywhere;white-space:normal}:root[data-ui=studio] .drop *{white-space:normal;overflow-wrap:anywhere;max-width:100%}

@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OfferPilot — Your AI job-search copilot</title>
+<meta name="description" content="Finds the right jobs, writes a tailored resume and cover letter for each one, and helps you apply — while you stay in control of every send.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+<script src="/static/brand.js"></script>
+<style>
+:root{--bg:#050812;--ink:#eaf2ff;--ink2:#b8c4dc;--mute:#8d9bbb;--line:rgba(125,160,255,.16);--cyan:#22d3ee;--violet:#8b5cf6;--panel:rgba(14,20,40,.7);color-scheme:dark}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(1000px 700px at 10% -10%,rgba(34,211,238,.18),transparent 60%),radial-gradient(900px 700px at 110% 20%,rgba(139,92,246,.2),transparent 60%),
+  linear-gradient(rgba(120,160,255,.04) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,rgba(120,160,255,.04) 1px,transparent 1px) 0 0/48px 48px,var(--bg);
+  color:var(--ink);font:16px/1.6 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:"Space Grotesk",Inter,sans-serif;letter-spacing:-.02em;margin:0}
+nav{position:sticky;top:0;z-index:10;backdrop-filter:blur(14px);background:rgba(5,8,18,.6);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:22px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font:700 19px "Space Grotesk",sans-serif;text-decoration:none}.brand svg{width:30px;height:30px}
+.links{display:flex;gap:22px;margin-left:auto}.links a{text-decoration:none;color:var(--ink2);font-size:15px}.links a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:12px;font-weight:600;text-decoration:none;border:1px solid var(--line);background:rgba(255,255,255,.04);transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .2s}
+.btn:hover{transform:translateY(-2px)}.btn.primary{background:linear-gradient(135deg,var(--cyan),#818cf8);color:#03131b;border:0;box-shadow:0 0 30px rgba(34,211,238,.35)}
+.btn.primary:hover{box-shadow:0 0 44px rgba(34,211,238,.55)}
+.btn:focus-visible,a:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+.hero{padding:96px 24px 64px;text-align:center}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;padding:6px 14px;border-radius:999px;border:1px solid rgba(34,211,238,.4);color:#a5f3fc;font-size:13.5px;background:rgba(34,211,238,.08)}
+.hero h1{font-size:clamp(38px,6vw,68px);line-height:1.05;margin:22px auto 18px;max-width:900px}
+.grad{background:linear-gradient(90deg,#fff,#67e8f9 45%,#c4b5fd);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{font-size:19px;color:var(--ink2);max-width:680px;margin:0 auto 30px}
+.cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* hero collage */
+.stage{position:relative;margin:64px auto 0;max-width:1120px;padding:30px 0 40px;text-align:left}
+.glow{position:absolute;inset:-8% 4% auto 4%;height:80%;background:radial-gradient(60% 60% at 50% 40%,rgba(34,211,238,.22),rgba(99,102,241,.14) 50%,transparent 75%);filter:blur(30px);z-index:0}
+.shot{position:relative;z-index:1;max-width:760px;margin:0 auto;border-radius:20px;padding:10px;border:1px solid transparent;
+  background:linear-gradient(#0c1328,#0a1022) padding-box,linear-gradient(160deg,rgba(103,232,249,.7),rgba(125,160,255,.12) 35%,rgba(139,92,246,.5)) border-box;
+  box-shadow:0 40px 110px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.02) inset;animation:rise .8s cubic-bezier(.2,.8,.2,1) both}
+.shot .bar{display:flex;gap:6px;align-items:center;padding:4px 6px 10px}.shot .bar i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.14)}
+.shot .url{margin-left:12px;font:500 11.5px "JetBrains Mono",monospace;color:var(--mute);letter-spacing:.04em}
+.mock{display:grid;grid-template-columns:150px 1fr;gap:10px;min-height:430px}
+.mock .sb{border-radius:12px;background:rgba(255,255,255,.03);padding:12px;display:grid;gap:4px;align-content:start}
+.mock .sb b{font:500 13px Inter,sans-serif;color:var(--mute);padding:8px 10px;border-radius:8px}
+.mock .sb b.sbl{color:#67e8f9;background:linear-gradient(90deg,rgba(34,211,238,.18),transparent);display:flex;align-items:center;gap:8px}.dot{width:6px;height:6px;border-radius:50%;background:#22d3ee;box-shadow:0 0 8px #22d3ee}
+.mock .main{display:grid;gap:10px;align-content:start}
+.mock .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.mock .t{border-radius:12px;background:rgba(255,255,255,.035);padding:12px 14px;border-top:2px solid var(--c)}
+.mock .t b{font:700 28px "Space Grotesk",sans-serif;display:block;line-height:1.1;font-variant-numeric:tabular-nums}.mock .t small{color:var(--mute);font-size:12.5px}
+.mock .row{display:flex;align-items:center;gap:12px;border-radius:12px;background:rgba(255,255,255,.035);padding:12px 14px}
+.mock .av{width:34px;height:34px;border-radius:10px;background:var(--c);display:grid;place-items:center;font:700 14px "Space Grotesk";color:#03131b;flex:none}
+.mock .ln{flex:1;display:grid;min-width:0}.mock .ln b{font:600 14px Inter,sans-serif}.mock .ln small{color:var(--mute);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mock .pill{font:600 11.5px "JetBrains Mono",monospace;padding:4px 9px;border-radius:8px;background:rgba(74,222,159,.12);color:#4ade9f;white-space:nowrap}
+.fc{position:absolute;z-index:2;border-radius:16px;padding:14px 16px;border:1px solid rgba(125,160,255,.22);background:rgba(12,19,40,.82);backdrop-filter:blur(14px);
+  box-shadow:0 24px 60px rgba(0,0,0,.55);animation:rise .8s cubic-bezier(.2,.8,.2,1) both;transition:transform .25s ease,border-color .2s}
+.fc:hover{transform:translateY(-4px);border-color:rgba(34,211,238,.55)}
+.fc .cap{font:500 10.5px "JetBrains Mono",monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);margin-bottom:6px}
+.f-match{left:0;top:46%;display:flex;gap:14px;align-items:center;animation-delay:.25s}
+.ring{position:relative;width:64px;height:64px}.ring b{position:absolute;inset:0;display:grid;place-items:center;font:700 20px "Space Grotesk"}
+.chips{display:flex;gap:6px;flex-wrap:wrap;max-width:190px}.c{font:600 11px "JetBrains Mono",monospace;padding:3px 8px;border-radius:7px}.c.ok{background:rgba(74,222,159,.12);color:#4ade9f}.c.gap{background:rgba(251,191,36,.13);color:#fbbf24}
+.f-diff{right:0;top:-13%;width:280px;animation-delay:.4s}
+.f-diff p{margin:0 0 10px;font-size:13px;line-height:1.55;color:var(--ink2)}
+.f-diff ins{background:rgba(139,92,246,.22);color:#ddd6fe;text-decoration:none;border-radius:4px;padding:1px 3px}.f-diff del{color:#fb7185;opacity:.75}
+.ok2{display:flex;align-items:center;gap:6px;font:600 12px Inter,sans-serif;color:#4ade9f}
+.f-iv{right:2%;bottom:0;display:flex;gap:14px;align-items:center;animation-delay:.55s}
+.date{width:46px;height:50px;border-radius:12px;background:rgba(34,211,238,.12);display:grid;place-items:center;align-content:center;color:#67e8f9}.date b{font:700 20px "Space Grotesk";line-height:1}.date small{font:600 9.5px "JetBrains Mono";letter-spacing:.1em}
+.f-iv .t1{display:block;font:600 14.5px Inter}.f-iv small{color:var(--mute);font-size:12.5px}
+.f-offer{left:2%;bottom:0;width:240px;animation-delay:.7s}
+.bars{display:grid;grid-template-columns:52px 1fr 26px;align-items:center;gap:8px;font-size:12.5px;margin-top:6px}.bars span{color:var(--ink2)}.bars em{font:600 12px "JetBrains Mono";font-style:normal;text-align:right}
+.bars i{height:8px;border-radius:5px;width:var(--w);background:linear-gradient(90deg,#22d3ee,#818cf8)}.bars i.dim{background:rgba(255,255,255,.22)}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+@media (max-width:1100px){.f-diff{width:250px}.f-diff .cap{display:none}}
+@media (max-width:900px){.fc{position:static;width:auto;margin:12px auto 0;max-width:420px;animation-delay:0s!important}.f-match,.f-iv{display:flex}.stage{display:block}.glow{inset:0}}
+
+section{padding-block:88px}section.wrap{padding:88px 24px}.center{text-align:center}
+.kicker{color:#67e8f9;font-weight:600;font-size:14px;letter-spacing:.08em;text-transform:uppercase}
+h2{font-size:clamp(28px,4vw,42px);margin:10px 0 14px}.lead{color:var(--ink2);max-width:680px;margin:0 auto}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:40px;counter-reset:s}
+.card{border-radius:18px;border:1px solid var(--line);background:var(--panel);padding:24px;backdrop-filter:blur(12px);position:relative;transition:transform .3s cubic-bezier(.34,1.56,.64,1),border-color .2s}
+.card:hover{transform:translateY(-4px);border-color:rgba(34,211,238,.45)}
+.steps .card::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:10px;margin-bottom:14px;font:700 16px "Space Grotesk";background:linear-gradient(135deg,var(--cyan),var(--violet));color:#03131b}
+.card h3{font-size:19px;margin-bottom:8px}.card p{margin:0;color:var(--ink2);font-size:15px}
+.feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:40px}
+.ico{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:rgba(34,211,238,.12);color:#67e8f9;margin-bottom:14px}.ico svg{width:22px;height:22px}
+.trust{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:36px}
+.trust .card{padding:20px}.trust b{display:block;margin-bottom:4px}
+.faq{max-width:780px;margin:36px auto 0;display:grid;gap:10px}
+details{border-radius:14px;border:1px solid var(--line);background:var(--panel);padding:16px 20px}
+summary{cursor:pointer;font-weight:600;list-style:none}summary::-webkit-details-marker{display:none}summary::after{content:"+";float:right;color:#67e8f9;font-size:20px;line-height:1}
+details[open] summary::after{content:"–"}details p{color:var(--ink2);margin:10px 0 0}
+.final{text-align:center;border-radius:24px;padding:56px 24px;border:1px solid rgba(34,211,238,.35);background:linear-gradient(135deg,rgba(34,211,238,.1),rgba(139,92,246,.12))}
+footer{border-top:1px solid var(--line);padding:30px 0;color:var(--mute);font-size:14px}footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between}
+@media (max-width:760px){.links{display:none}.mock{grid-template-columns:1fr}.mock .sb{display:none}.mock .tiles{grid-template-columns:repeat(2,1fr)}.mock .pill{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap">
+<style>
+/* Studio look: matches the app. Cool white, evergreen accent, Newsreader titles, Instrument Sans text. */
+:root{--bg:#F7F8FA;--ink:#14181F;--ink2:#3B4452;--mute:#5F6978;--line:#E2E6EB;--cyan:#0E6B56;--violet:#5746AF;--panel:#FFFFFF;color-scheme:light}
+body{background:var(--bg);font-family:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;word-spacing:.04em}
+body::before,.glow,.kicker,.eyebrow{display:none}
+h1,h2{font-family:"Newsreader","Iowan Old Style",Georgia,serif;font-weight:500;letter-spacing:-.02em}
+h3,summary{font-family:inherit;font-weight:600;letter-spacing:0}
+nav{background:rgba(247,248,250,.92);border-bottom:1px solid var(--line)}
+.brand{font:600 21px "Newsreader",Georgia,serif}.brand svg rect{fill:#0E6B56}
+.links a{color:var(--ink2)}
+.btn{border-radius:8px;background:#fff;border:1px solid var(--line);color:var(--ink);box-shadow:none;transition:background .15s}.btn:hover{transform:none;background:#F0F2F5}
+.btn.primary{background:#0E6B56;background-image:none;border-color:#0E6B56;color:#fff;box-shadow:none}.btn.primary:hover{background:#0B5646;box-shadow:none}
+.btn:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid #0E6B56;outline-offset:3px}
+.hero{text-align:left;padding-top:88px}
+.eyebrow{border:0;background:none;padding:0;color:var(--mute);font-size:15px}
+.hero h1{margin:14px 0 20px;max-width:13ch;font-size:clamp(46px,6.6vw,84px);line-height:1}
+.grad{background:none;-webkit-text-fill-color:currentColor;color:inherit}
+.hero p{margin:0 0 30px;max-width:54ch;color:var(--ink2)}.cta{justify-content:flex-start}
+.shot{background:#fff;border:1px solid var(--line);box-shadow:0 30px 80px rgba(20,24,31,.12)}
+.shot .bar i{background:#D5DAE1}.shot .url{font-family:inherit;color:var(--mute);letter-spacing:0}
+.mock .sb{background:#F7F8FA}.mock .sb b{color:var(--mute)}.mock .sb b.sbl{color:var(--ink);background:#EEF1F4}.dot{background:#0E6B56;box-shadow:none}
+.mock .t{background:#F7F8FA;border-top:0}.mock .t b{font:500 30px "Newsreader",Georgia,serif;color:var(--ink)}
+.mock .row{background:#F7F8FA}.mock .av{color:#fff}.mock .pill{font:600 12px "Instrument Sans",sans-serif;background:#E3F3EE;color:#0E6B56}
+.fc{background:#fff;border:1px solid var(--line);box-shadow:0 18px 44px rgba(20,24,31,.14);backdrop-filter:none;color:var(--ink)}
+.fc:hover{transform:translateY(-3px);border-color:#C9D0D8}
+.fc .cap{font:600 12.5px "Instrument Sans",sans-serif;text-transform:none;letter-spacing:0;color:var(--mute)}
+.ring circle:first-of-type{stroke:#E2E6EB}.ring circle:last-of-type{stroke:#0E6B56}
+.c{font-family:inherit}.c.ok{background:#E3F3EE;color:#0E6B56}.c.gap{background:#FCF1DC;color:#8F5300}
+.f-diff p{color:var(--ink2)}.f-diff ins{background:#EFEDFB;color:#3D2F9A}.f-diff del{color:#B4233C}.ok2{color:#0E6B56}
+.date{background:#E3F3EE;color:#0E6B56}.date small,.bars em{font-family:inherit}.bars span{color:var(--ink2)}.bars em{color:var(--ink)}
+.bars i{background:#0E6B56}.bars i.dim{background:#C9D0D8}
+.center{text-align:left}.lead{margin-left:0;color:var(--ink2)}h2{font-size:clamp(30px,4vw,46px);margin-top:0}
+.card{background:#fff;border:1px solid var(--line);backdrop-filter:none;border-radius:12px;transition:border-color .15s}.card:hover{transform:none;border-color:#C9D0D8}
+.steps .card::before{display:block;background:none;color:#0E6B56;font:500 34px/1 "Newsreader",Georgia,serif;width:auto;height:auto;border-radius:0;margin-bottom:12px}
+.ico{background:#E3F3EE;color:#0E6B56;border-radius:8px}
+details{background:#fff;border:1px solid var(--line);border-radius:10px}summary::after{color:#0E6B56}.faq{margin-left:0}
+.final{background:#0E6B56;border:0;border-radius:16px;text-align:left;padding:52px 48px}.final h2{color:#fff}.final .lead{color:#D6EDE6}
+.final .btn.primary{background:#fff;border-color:#fff;color:#0E6B56}.final .btn.primary:hover{background:#E3F3EE}
+footer{border-top:1px solid var(--line)}
+@media (max-width:760px){.final{padding:36px 24px}}
+</style>
+</head>
+<body>
+<nav aria-label="Primary"><div class="wrap"><a class="brand" href="#top"><span data-logo></span><span data-name>OfferPilot</span></a>
+  <div class="links"><a href="#how">How it works</a><a href="#features">Features</a><a href="#trust">Safety</a><a href="#faq">FAQ</a></div>
+  <a class="btn primary" href="/">Open the app</a></div></nav>
+<main id="top">
+  <header class="hero wrap">
+    <span class="eyebrow">● Human-in-the-loop · every application checked by you</span>
+    <h1><span class="grad">Land interviews,</span><br>not busywork.</h1>
+    <p data-pitch>Finds the right jobs, writes a tailored resume and cover letter for each one, and helps you apply — while you stay in control of every send.</p>
+    <div class="cta"><a class="btn primary" href="/">Get started</a><a class="btn" href="#how">See how it works</a></div>
+    <div class="stage" aria-hidden="true">
+      <div class="glow"></div>
+      <div class="shot"><div class="bar"><i></i><i></i><i></i><span class="url">offerpilot · dashboard</span></div>
+        <div class="mock"><div class="sb"><b class="sbl"><span class="dot"></span>Dashboard</b><b>Jobs</b><b>Applications</b><b>Interviews</b><b>Inbox</b></div>
+          <div class="main"><div class="tiles"><div class="t" style="--c:#fbbf24"><b>3</b><small>Ready for you</small></div><div class="t" style="--c:#7dd3fc"><b>65</b><small>New matches</small></div>
+            <div class="t" style="--c:#22d3ee"><b>12</b><small>Applied</small></div><div class="t" style="--c:#4ade9f"><b>2</b><small>Interviews</small></div></div>
+            <div class="row"><span class="av" style="--c:#f97316">A</span><span class="ln"><b>Security Operations Analyst</b><small>Acme Cloud · Pune · ₹18–26 LPA</small></span><span class="pill">Strong 82%</span></div>
+            <div class="row"><span class="av" style="--c:#8b5cf6">G</span><span class="ln"><b>Detection Engineer</b><small>Globex · Remote · India</small></span><span class="pill">Strong 76%</span></div>
+            <div class="row"><span class="av" style="--c:#22d3ee">I</span><span class="ln"><b>Cloud Security Engineer</b><small>Initech · Bengaluru</small></span><span class="pill">Good 71%</span></div></div></div></div>
+
+      <div class="fc f-match"><div class="ring"><svg viewBox="0 0 64 64" width="64" height="64"><circle cx="32" cy="32" r="26" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="6"/><circle cx="32" cy="32" r="26" fill="none" stroke="url(#rg)" stroke-width="6" stroke-linecap="round" stroke-dasharray="134 164" transform="rotate(-90 32 32)"/><defs><linearGradient id="rg"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#818cf8"/></linearGradient></defs></svg><b>82</b></div>
+        <div><div class="cap">Match</div><div class="chips"><span class="c ok">Python ✓</span><span class="c ok">Splunk ✓</span><span class="c gap">GCP · gap</span></div></div></div>
+
+      <div class="fc f-diff"><div class="cap">Tailored resume · changes highlighted</div>
+        <p><del>Worked on alerts</del> <ins>Automated triage of phishing alerts with Python and VirusTotal</ins>, <ins>auto-closing 75%</ins> of cases.</p>
+        <div class="ok2"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>Fact check passed · 0 invented claims</div></div>
+
+      <div class="fc f-iv"><div class="date"><b>2</b><small>OCT</small></div><div><div class="cap">Interview · in 24 h</div><b class="t1">Detection Engineer</b><small>4:10 PM · video · prep kit ready</small></div></div>
+
+      <div class="fc f-offer"><div class="cap">Offers compared</div><div class="bars"><span>Globex</span><i style="--w:92%"></i><em>76</em></div><div class="bars"><span>Acme</span><i style="--w:80%" class="dim"></i><em>73</em></div></div>
+    </div>
+  </header>
+
+  <section id="how" class="wrap center"><div class="kicker">How it works</div><h2>From “I should apply” to “applied” in four steps</h2>
+    <p class="lead">Upload your resume once. The copilot does the searching, reading and writing; you make the decisions.</p>
+    <div class="steps" style="text-align:left">
+      <div class="card"><h3>Upload your resume</h3><p>It reads your experience, skills and projects, and checks every extracted fact against your file.</p></div>
+      <div class="card"><h3>Get matched</h3><p>Pulls roles from job boards, company career sites and the job-alert emails already in your inbox — then scores each one against you.</p></div>
+      <div class="card"><h3>Review tailored applications</h3><p>A resume and cover letter written for each job, with every change highlighted. Edit anything, then approve.</p></div>
+      <div class="card"><h3>Apply & follow through</h3><p>Sends by email or guides you through the company's form, reads recruiter replies, drafts responses and preps you for interviews.</p></div>
+    </div></section>
+
+  <section id="features" class="wrap"><div class="center"><div class="kicker">Features</div><h2>Everything a serious job search needs</h2></div>
+    <div class="feat">
+      <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div><h3>Jobs from everywhere that's allowed</h3><p>Remote boards, public company career sites, and your LinkedIn, Naukri and Glassdoor alert emails — without scraping accounts that get banned.</p></div>
+      <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg></div><h3>Tailoring that never lies</h3><p>Every resume and letter passes a fact-checker. If a skill isn't in your profile, it can't appear as yours — it's shown to you as a gap instead.</p></div>
+      <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg></div><h3>An inbox that works for you</h3><p>Recruiter replies are sorted into interviews, questions and rejections, linked to the right application, with reply drafts ready.</p></div>
+      <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2"/></svg></div><h3>Company research</h3><p>Hiring momentum, recent news and public security signals for every employer — the kind of context that wins interviews.</p></div>
+      <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/></svg></div><h3>Insights that tell you what to learn</h3><p>See which skills employers ask for most, where you match and where you don't, and how your pipeline converts.</p></div>
+      <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div><h3>Interview prep, per job</h3><p>Likely questions for each role with talking points taken from your real experience — and honest flags where you'll need to prepare.</p></div>
+    </div></section>
+
+  <section id="trust" class="wrap center"><div class="kicker">Safety & privacy</div><h2>You stay in control</h2>
+    <p class="lead">Built so it can't embarrass you, spam recruiters or put your accounts at risk.</p>
+    <div class="trust" style="text-align:left">
+      <div class="card"><b>Nothing sends without you</b><span style="color:var(--ink2)">Every application waits for your approval. Practice mode lets you try everything first.</span></div>
+      <div class="card"><b>Grounded in your real experience</b><span style="color:var(--ink2)">A fact-checker blocks invented skills, employers, years or numbers before you ever see them.</span></div>
+      <div class="card"><b>Minimal Gmail access</b><span style="color:var(--ink2)">Send and read-only permissions. Only job-related mail is read; everything else is ignored and never stored.</span></div>
+      <div class="card"><b>No account-risking automation</b><span style="color:var(--ink2)">LinkedIn, Naukri and Glassdoor are never automated — their jobs come in through the alert emails you already get.</span></div>
+    </div></section>
+
+  <section id="faq" class="wrap"><div class="center"><div class="kicker">FAQ</div><h2>Questions</h2></div>
+    <div class="faq">
+      <details><summary>Will it apply to jobs without asking me?</summary><p>No. Every application is prepared and then waits for your approval. There's an optional Autopilot for very strong email matches with a daily cap, and it's off by default.</p></details>
+      <details><summary>Can it make things up on my resume?</summary><p>No. Tailoring can only select and rephrase facts from your own profile. A checker rejects anything it can't trace back to your resume — skills, tools, numbers or years of experience.</p></details>
+      <details><summary>Does it work with LinkedIn?</summary><p>Yes, through LinkedIn job-alert emails in your Gmail. It doesn't log into or scrape LinkedIn, because that gets personal accounts banned.</p></details>
+      <details><summary>Where is my data?</summary><p>On your own computer. Your profile, jobs and emails are stored locally, and the AI that writes your applications can run locally too. If you choose Claude instead, the text needed for each application is sent to Anthropic's API.</p></details>
+      <details><summary>What does it cost?</summary><p>It's free while in early access.</p></details>
+    </div></section>
+
+  <section class="wrap"><div class="final"><h2>Ready for your next role?</h2><p class="lead" style="margin-bottom:24px">Upload a resume and see your first matches the same day.</p>
+    <a class="btn primary" href="/">Open the app</a></div></section>
+</main>
+<footer><div class="wrap"><span>© <span id="yr"></span> <span data-name>OfferPilot</span></span><span data-support></span></div></footer>
+<script>
+  const B = window.BRAND || {};
+  document.querySelectorAll("[data-name]").forEach(e => e.textContent = B.name || e.textContent);
+  document.querySelectorAll("[data-logo]").forEach(e => e.innerHTML = B.logo || "");
+  document.querySelectorAll("[data-pitch]").forEach(e => e.textContent = B.pitch || e.textContent);
+  document.querySelectorAll("[data-support]").forEach(e => e.textContent = B.support ? "Support: " + B.support : "");
+  document.getElementById("yr").textContent = new Date().getFullYear();
+  if (B.name) document.title = `${B.name} — ${B.tagline}`;
+</script>
+</body>
+</html>

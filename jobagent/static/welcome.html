@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#060B19">
+<title>OfferPilot — Your AI job-search copilot</title>
+<meta name="description" content="Finds the right jobs, writes a tailored resume and cover letter for each one, and helps you apply — while you stay in control of every send.">
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+<script>document.documentElement.classList.add("js")</script>
+<script src="/static/brand.js"></script>
+<script src="/static/fx.js" defer></script>
+<style>
+/* Same identity as the app, flown at night: navy and gold, Archivo, squared shapes.
+   The page is a flight: a night sky with routes being flown, a horizon, and the product rising over it.
+   Motion is staged once on load and then answers scrolling and the pointer. With reduced motion everything is simply there. */
+:root{--night:#060B19;--navy:#0B1A3B;--navy-2:#13264F;--gold:#F5B301;--gold-2:#FFC933;--gold-edge:#C28E00;--ice:#7CC4FF;--blue:#3D6BFF;
+  --bg:#F3F5F9;--panel:#FFFFFF;--panel-2:#F2F4F8;--panel-3:#E3E8F0;--ink:#0D1B33;--ink-2:#3C4963;--mute:#5D6982;--line:#DCE1EA;--line-2:#BDC6D5;--accent:#1B4FD8;--emerald:#0A7548;
+  --on-night:#EEF2FB;--on-night-2:rgba(226,233,248,.74);--hair:rgba(160,185,255,.16);
+  --beam:linear-gradient(90deg,#3D6BFF,#7CC4FF 45%,#F5B301);--glide:cubic-bezier(.2,.7,.2,1);--settle:cubic-bezier(.3,1.4,.5,1);color-scheme:light}
+@property --a{syntax:"<angle>";inherits:false;initial-value:0deg}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:76px}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 Archivo,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip}
+a{color:inherit}
+h1,h2,h3{margin:0;line-height:1.1}
+h2{font-size:clamp(28px,3.7vw,46px);font-weight:700;font-stretch:116%;letter-spacing:-.018em}
+h3{font-size:18px;font-weight:650;line-height:1.3}
+p{margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:24px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.dark :focus-visible,.nav :focus-visible,.sheet :focus-visible{outline-color:var(--gold)}
+.grain{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.09'/%3E%3C/svg%3E")}
+
+/* ---------- buttons: a sheen crosses the main one; both lean toward the pointer */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 24px;overflow:hidden;isolation:isolate;border:1px solid var(--line-2);border-radius:4px;background:var(--panel);color:var(--ink);
+  font-size:16px;font-weight:650;text-decoration:none;white-space:nowrap;translate:var(--tx,0px) var(--ty,0px);transition:background .15s,border-color .15s,translate .45s var(--settle),box-shadow .2s,scale .12s}
+.btn:active{scale:.97}
+.btn.primary{background:var(--gold);border-color:var(--gold-edge);color:var(--navy);box-shadow:0 10px 30px -12px rgba(245,179,1,.55)}
+.btn.primary:hover{background:var(--gold-2);box-shadow:0 14px 36px -12px rgba(245,179,1,.75)}
+.btn.primary::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 32%,rgba(255,255,255,.7) 50%,transparent 68%);transform:translateX(-130%)}
+.btn.primary:hover::after{transform:translateX(130%);transition:transform .8s var(--glide)}
+.btn.ghost{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.26);color:#fff}.btn.ghost:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.6)}
+.btn.sm{height:38px;padding:0 16px;font-size:14.5px}
+.btn svg{width:16px;height:16px;transition:translate .25s var(--glide)}.btn:hover svg{translate:3px 0}
+
+/* ---------- top: progress, navigation that reacts to scrolling, phone menu */
+.progress{position:fixed;inset:0 0 auto 0;z-index:60;height:2px;background:var(--beam);transform:scaleX(var(--p,0));transform-origin:left;pointer-events:none}
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;color:#fff;transition:transform .35s var(--glide),background .3s,box-shadow .3s}
+.nav::after{content:"";position:absolute;inset:auto 0 0 0;height:1px;background:linear-gradient(90deg,transparent,rgba(124,196,255,.55) 22%,rgba(245,179,1,.6) 78%,transparent);opacity:0;transition:opacity .3s}
+.nav.scrolled{background:rgba(7,13,28,.72);-webkit-backdrop-filter:blur(16px) saturate(1.6);backdrop-filter:blur(16px) saturate(1.6);box-shadow:0 14px 34px -22px rgba(2,6,16,.9)}
+.nav.scrolled::after{opacity:1}
+.nav.away{transform:translateY(-100%)}
+.nav .wrap{display:flex;align-items:center;gap:28px;height:68px;transition:height .3s var(--glide)}.nav.scrolled .wrap{height:58px}
+.brand{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:700;font-stretch:112%;letter-spacing:-.01em;text-decoration:none}
+.brand svg{display:block;width:30px;height:30px;transition:rotate .5s var(--settle)}.brand:hover svg{rotate:-8deg}
+.links{position:relative;display:flex;gap:4px;margin-left:auto}
+.links a{position:relative;padding:8px 12px;color:rgba(255,255,255,.74);font-size:15px;font-weight:550;text-decoration:none;transition:color .2s}
+.links a:hover,.links a.on{color:#fff}
+.navink{position:absolute;left:0;bottom:2px;height:2px;width:var(--w,0px);background:var(--gold);transform:translateX(var(--x,0px));opacity:var(--o,0);transition:transform .4s var(--glide),width .4s var(--glide),opacity .25s;pointer-events:none}
+.menu{display:none;width:42px;height:42px;margin-left:auto;padding:0;border:1px solid rgba(255,255,255,.24);border-radius:4px;background:rgba(255,255,255,.04);color:#fff;cursor:pointer}
+.menu i{display:block;width:18px;height:2px;margin:5px auto;background:currentColor;transition:translate .3s var(--glide),rotate .3s var(--glide)}
+.menu[aria-expanded=true] i:first-child{translate:0 3.5px;rotate:45deg}.menu[aria-expanded=true] i:last-child{translate:0 -3.5px;rotate:-45deg}
+.sheet{position:fixed;inset:0;z-index:45;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:90px 28px 40px;background:rgba(6,11,25,.9);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);color:#fff;opacity:0;visibility:hidden;transition:opacity .3s,visibility 0s .3s}
+.sheet.open{opacity:1;visibility:visible;transition:opacity .3s}
+.sheet a:not(.btn){padding:10px 0;border-bottom:1px solid var(--hair);font-size:30px;font-weight:700;font-stretch:118%;text-decoration:none;opacity:0;translate:0 18px;transition:opacity .4s var(--glide),translate .4s var(--glide);transition-delay:calc(var(--i) * 55ms + 60ms)}
+.sheet.open a{opacity:1;translate:0 0}.sheet .btn{margin-top:22px;opacity:1;translate:none}
+
+/* ---------- hero: night sky, horizon, the product rising over it */
+.dark{position:relative;background:var(--night);color:var(--on-night)}
+.hero{overflow:clip}
+.sky{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.sky canvas{position:absolute;inset:0;width:100%;height:100%}
+.sky .grid{position:absolute;inset:0;background:linear-gradient(rgba(140,170,255,.075) 1px,transparent 1px) 0 0/64px 64px,linear-gradient(90deg,rgba(140,170,255,.075) 1px,transparent 1px) 0 0/64px 64px;
+  -webkit-mask-image:radial-gradient(95% 72% at 50% 0%,#000 18%,transparent 76%);mask-image:radial-gradient(95% 72% at 50% 0%,#000 18%,transparent 76%)}
+.sky .light{position:absolute;inset:0;background:radial-gradient(460px circle at var(--mx,62%) var(--my,26%),rgba(124,196,255,.13),transparent 70%)}
+.glow{position:absolute;border-radius:50%;translate:0 calc(var(--sy,0) * var(--k,.1px))}
+.glow.cool{left:-12%;top:-26%;width:62%;aspect-ratio:1;--k:.18px;background:radial-gradient(closest-side,rgba(61,107,255,.34),transparent)}
+.glow.deep{right:-18%;top:6%;width:56%;aspect-ratio:1;--k:.1px;background:radial-gradient(closest-side,rgba(86,60,200,.2),transparent)}
+.horizon{position:absolute;left:50%;bottom:-74vw;width:170vw;height:92vw;translate:-50% calc(var(--sy,0) * -.06px);border-radius:50%;background:radial-gradient(closest-side,var(--night) 97.5%,transparent 100%);
+  box-shadow:0 -1px 0 rgba(255,214,128,.75),0 -2px 22px rgba(245,179,1,.5),0 -30px 140px rgba(245,179,1,.2),0 -90px 260px rgba(61,107,255,.2)}
+.hero-in{position:relative;padding-block:150px 0}
+.hero h1{max-width:13ch;font-size:clamp(44px,7vw,98px);line-height:.98;font-weight:800;font-stretch:125%;letter-spacing:-.024em}
+.hero h1 .ln{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}.hero h1 .ln>span{display:block}
+.pitch{max-width:56ch;margin:26px 0 32px;color:var(--on-night-2);font-size:19px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+/* the five stages: a route is flown along them, each lights as it is reached */
+.ladderwrap{position:relative;margin-top:64px}
+.ladder{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin:0;padding:0;list-style:none}
+.ladder::before{content:"";position:absolute;inset:0 0 auto 0;height:1px;background:linear-gradient(90deg,rgba(124,196,255,.5),rgba(245,179,1,.7));transform-origin:left}
+.lfly{position:absolute;left:0;top:-8px;width:calc(100% - 16px);height:16px;pointer-events:none;opacity:0}
+.lfly svg{display:block;width:16px;height:16px;fill:var(--gold);filter:drop-shadow(0 0 6px rgba(245,179,1,.8))}
+.ladder li{position:relative;padding:20px 16px 0 0;transition:translate .25s var(--glide)}
+.ladder li::before{content:"";position:absolute;left:0;top:-3px;width:7px;height:7px;border-radius:50%;background:var(--night);box-shadow:inset 0 0 0 1.5px var(--ice)}
+.ladder li:hover{translate:0 -3px}
+.ladder b{display:block;margin-top:10px;font-size:16px;font-weight:650}
+.ladder li>span:not(.ep){display:block;color:var(--on-night-2);font-size:14.5px;line-height:1.45}
+.ep{display:inline-flex;align-items:center;gap:3px;height:22px;padding:0 6px;border-radius:3px;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.ep i{width:4px;height:12px;border-radius:1px;background:rgba(255,255,255,.2);transition:background .35s,box-shadow .35s}
+.ep i.on{background:var(--gold)}
+/* the product, shown in depth: it levels out as you scroll, leans to the pointer, a beam runs round its edge once */
+.stagewrap{position:relative;margin-top:74px;padding-bottom:90px;perspective:1700px}
+.rise{position:relative}
+.shot{position:relative;border-radius:10px;background:var(--panel);color:var(--ink);transform-origin:50% 0;rotate:x calc((1 - var(--lv,1)) * 16deg);scale:calc(.93 + var(--lv,1) * .07);
+  transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .6s var(--glide);box-shadow:0 60px 120px -40px rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.1),0 -18px 80px -20px rgba(61,107,255,.35)}
+.shot:hover{transition:transform .12s linear}
+.shot::before{content:"";position:absolute;inset:-1px;z-index:2;padding:1.5px;border-radius:inherit;background:conic-gradient(from var(--a),transparent 0 70%,var(--ice) 86%,var(--gold) 96%,transparent 100%);pointer-events:none;opacity:0;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+.shot-in{overflow:hidden;border-radius:inherit}
+.sbar{display:flex;align-items:center;gap:6px;height:46px;padding:0 16px;background:var(--navy);color:#fff;font-size:13.5px}
+.sbar svg{display:block;width:22px;height:22px}.sbar b{margin:0 14px 0 4px;font-size:15px;font-weight:700;font-stretch:112%}
+.sbar span{position:relative;display:flex;align-items:center;height:100%;padding:0 10px;color:rgba(255,255,255,.72);font-weight:550}
+.sbar span.on{color:#fff}.sbar span.on::after{content:"";position:absolute;left:10px;right:10px;bottom:0;height:3px;background:var(--gold)}
+.sbar em{margin-left:auto;padding:0 12px;border-radius:4px;background:var(--gold);color:var(--navy);font-size:13px;font-style:normal;font-weight:650;line-height:28px}
+.shead{padding:14px 20px 12px;border-bottom:1px solid var(--line)}
+.shead b{display:block;font-size:20px;font-weight:700;font-stretch:114%;line-height:1.2}.shead span{color:var(--mute);font-size:13px}
+.shot table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.4}
+.shot th{padding:8px 20px;background:var(--panel-2);border-bottom:1px solid var(--line);color:var(--mute);font-size:12.5px;font-weight:600;font-stretch:94%;text-align:left}
+.shot td{padding:11px 20px;border-top:1px solid var(--line);vertical-align:middle;white-space:nowrap;transition:background .4s}
+.shot tr:first-child td{border-top:0}
+.shot td b{display:block;font-weight:600}.shot td small{color:var(--mute);font-size:12.5px}
+.st{display:inline-flex;align-items:center;gap:8px}
+.st .ep{height:16px;gap:2px;padding:0 4px;border-radius:2px;background:var(--navy);box-shadow:none}.st .ep i{width:3px;height:9px}
+.st .lbl{display:inline-grid}.st .lbl>*{grid-area:1/1;transition:opacity .4s,translate .4s var(--glide)}.st .lbl>:nth-child(2){opacity:0;translate:0 8px}
+.mt{display:inline-flex;align-items:center;gap:8px;font-weight:650;font-variant-numeric:tabular-nums}
+.mt u{display:block;width:54px;height:6px;border-radius:1px;background:var(--panel-3);text-decoration:none}.mt u i{display:block;height:100%;background:var(--emerald);transform-origin:left}
+.act{display:inline-block;padding:0 10px;border:1px solid var(--line-2);border-radius:4px;font-size:12.5px;font-weight:550;line-height:26px;transition:background .3s,border-color .3s,box-shadow .3s}
+.shot td:last-child{text-align:right}
+/* a short story inside the picture: one application is approved, and only then it is sent */
+tr.aim td{background:#FFF8E1}tr.aim .act{background:var(--gold);border-color:var(--gold-edge);box-shadow:0 0 0 4px rgba(245,179,1,.25)}
+tr.sent td{background:transparent}tr.sent .act{background:transparent;border-color:var(--line-2);box-shadow:none}
+tr.sent .lbl>:first-child{opacity:0;translate:0 -8px}tr.sent .lbl>:nth-child(2){opacity:1;translate:0 0}
+/* instrument readouts floating beside the product */
+.chip{position:absolute;z-index:3;display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid rgba(255,255,255,.14);border-radius:8px;background:rgba(14,24,50,.72);-webkit-backdrop-filter:blur(14px) saturate(1.5);backdrop-filter:blur(14px) saturate(1.5);
+  color:var(--on-night);font-size:13.5px;line-height:1.35;box-shadow:0 24px 50px -24px rgba(0,0,0,.9);translate:0 calc((1 - var(--lv,1)) * var(--d,30px))}
+.chip b{display:block;font-weight:650}.chip small{color:var(--on-night-2);font-size:12.5px}
+.chip svg{flex:none;width:22px;height:22px}
+.chip.c1{left:34px;bottom:-54px;--d:70px}.chip.c2{right:170px;top:-40px;--d:-36px}.chip.c3{right:38px;bottom:-62px;--d:110px}
+.chip .ring{position:relative;display:grid;place-items:center;width:38px;height:38px;font-size:12.5px;font-weight:700}.chip .ring svg{position:absolute;inset:0;width:100%;height:100%}
+
+/* ---------- sections */
+section{position:relative;padding-block:96px}
+.lead{max-width:60ch;margin-top:16px;color:var(--ink-2)}.dark .lead{color:var(--on-night-2)}
+/* four steps along a route that is flown as you scroll */
+.steps{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:56px 0 0;padding:0;list-style:none;counter-reset:s}
+.steps::before,.steps::after{content:"";position:absolute;inset:0 0 auto 0;height:2px;background:var(--line-2)}
+.steps::after{background:linear-gradient(90deg,var(--navy),var(--gold));transform:scaleX(var(--tp,1));transform-origin:left}
+.steps li{position:relative;padding:30px 28px 0 0;counter-increment:s}
+.steps li::before{content:counter(s);display:block;margin-bottom:14px;font-size:54px;line-height:1;font-weight:800;font-stretch:125%;color:transparent;-webkit-text-stroke:1.5px var(--line-2);transition:color .5s,-webkit-text-stroke-color .5s}
+.steps li::after{content:"";position:absolute;left:0;top:-5px;width:12px;height:12px;border-radius:50%;background:var(--bg);box-shadow:inset 0 0 0 2px var(--line-2);transition:background .4s,box-shadow .4s,scale .4s var(--settle)}
+.steps li.on::before{color:var(--navy);-webkit-text-stroke-color:var(--navy)}
+.steps li.on::after{background:var(--gold);box-shadow:inset 0 0 0 2px var(--gold-edge),0 0 0 5px rgba(245,179,1,.22);scale:1.1}
+.steps p{margin-top:8px;color:var(--ink-2);font-size:16px}
+.steps h3,.steps p{opacity:.55;transition:opacity .5s}.steps li.on h3,.steps li.on p{opacity:1}
+/* features: glass cards on the night; a light follows the pointer along their edge and they lean toward it */
+.feats{overflow:clip}
+.feats .sky .grid{-webkit-mask-image:radial-gradient(80% 60% at 80% 10%,#000 10%,transparent 72%);mask-image:radial-gradient(80% 60% at 80% 10%,#000 10%,transparent 72%)}
+.feats .glow.cool{left:auto;right:-16%;top:-30%;width:54%}
+.bento{position:relative;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;margin-top:44px;perspective:1400px}
+.fcard{position:relative;grid-column:span 2;padding:26px 24px 28px;border:1px solid rgba(255,255,255,.09);border-radius:8px;background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.02));
+  transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .6s var(--glide),border-color .3s,background .3s}
+.fcard:hover{transition:transform .12s linear,border-color .3s,background .3s;border-color:rgba(255,255,255,.16);background:radial-gradient(360px circle at var(--mx,50%) var(--my,0%),rgba(124,196,255,.1),transparent 70%),linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02))}
+.fcard::before{content:"";position:absolute;inset:-1px;padding:1px;border-radius:inherit;opacity:0;transition:opacity .35s;pointer-events:none;background:radial-gradient(240px circle at var(--mx,50%) var(--my,0%),rgba(124,196,255,.9),rgba(245,179,1,.5) 45%,transparent 72%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+.fcard:hover::before{opacity:1}
+.fcard.wide{grid-column:span 3}
+.fcard>svg{display:block;width:26px;height:26px;margin-bottom:16px;color:var(--gold)}
+.fcard>svg *{stroke-dasharray:1;stroke-dashoffset:0}
+.fcard:hover>svg *{animation:draw .7s var(--glide) both}
+@keyframes draw{from{stroke-dashoffset:1}}
+.fcard p{margin-top:8px;color:var(--on-night-2);font-size:16px}
+.demo{margin-top:20px;padding:14px 16px;border:1px solid rgba(255,255,255,.08);border-radius:6px;background:rgba(4,8,20,.5);font-size:14.5px;line-height:1.55;color:var(--on-night-2)}
+.demo del{color:#FF9097;text-decoration-thickness:1px}.demo ins{padding:0 3px;border-radius:2px;background:rgba(124,196,255,.16);color:#CFE6FF;text-decoration:none}
+.demo .ok{display:flex;align-items:center;gap:8px;margin-top:10px;color:#56D6A0;font-size:13.5px;font-weight:600}.demo .ok svg{width:15px;height:15px;margin:0}
+.demo ul{display:grid;gap:6px;margin:0;padding:0;list-style:none}.demo li{display:flex;gap:9px}.demo li b{flex:none;width:16px;text-align:center}
+.demo .good b{color:#56D6A0}.demo .care b{color:var(--gold)}.demo strong{color:var(--on-night);font-weight:650}
+/* guardrails: four figures that are rules, not vanity numbers */
+.figs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;margin-top:44px;overflow:hidden;border:1px solid var(--line);border-radius:8px;background:var(--line);box-shadow:0 30px 60px -44px rgba(11,26,59,.5)}
+.figs>div{padding:26px 24px 24px;background:var(--panel)}
+.figs b{display:block;font-size:clamp(40px,4.6vw,60px);line-height:1;font-weight:800;font-stretch:125%;font-variant-numeric:tabular-nums;letter-spacing:-.02em;color:var(--navy)}
+.figs span{display:block;margin-top:10px;color:var(--ink-2);font-size:15.5px;line-height:1.45}
+.trust{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 56px;margin-top:40px}
+.trust>div{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;padding:22px 0;border-top:1px solid var(--line-2)}
+.trust svg{grid-row:span 2;width:22px;height:22px;margin-top:3px;color:var(--emerald)}
+.trust svg path{stroke-dasharray:1;stroke-dashoffset:0}
+.trust b{font-size:17px;font-weight:650}.trust span{grid-column:2;color:var(--ink-2);font-size:16px}
+.faq{max-width:820px;margin-top:34px;border-bottom:1px solid var(--line-2)}
+details{border-top:1px solid var(--line-2)}
+summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0;font-size:17.5px;font-weight:650;cursor:pointer;list-style:none;transition:color .2s}
+summary:hover{color:var(--accent)}
+summary::-webkit-details-marker{display:none}
+summary i{position:relative;flex:none;width:18px;height:18px}
+summary i::before,summary i::after{content:"";position:absolute;left:0;top:8px;width:18px;height:2px;background:currentColor;transition:rotate .3s var(--glide)}
+summary i::after{rotate:90deg}details[open] summary i::after{rotate:0deg}
+.ans{overflow:hidden}.ans p{max-width:66ch;padding:0 0 22px;color:var(--ink-2)}
+/* the close: the horizon again */
+.final{overflow:clip;padding-block:120px 130px;text-align:center}
+.final .horizon{bottom:-82vw}
+.final h2{position:relative;font-size:clamp(34px,6vw,84px);font-weight:800;font-stretch:125%;line-height:1}
+.final p{position:relative;margin:20px auto 34px;color:var(--on-night-2);font-size:19px}
+.final .btn{height:54px;padding:0 30px;font-size:17px}
+footer{position:relative;padding:26px 0;background:var(--night);border-top:1px solid var(--hair);color:rgba(226,233,248,.6);font-size:14.5px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* ---------- motion. Everything below only applies when animation is allowed (html.anim is set by the script). */
+@keyframes lineup{from{translate:0 108%}}
+@keyframes widen{from{font-stretch:76%;letter-spacing:.01em}}
+@keyframes rise{from{opacity:0;translate:0 22px}}
+@keyframes fade{from{opacity:0}}
+@keyframes fromleft{from{transform:scaleX(0)}}
+@keyframes fromtop{from{transform:scaleY(0)}}
+@keyframes fly{from{transform:translateX(0)}to{transform:translateX(100%)}}
+@keyframes stripe{from{background:rgba(255,255,255,.2);transform:scaleY(.35)}}
+@keyframes mockup{from{opacity:0;translate:0 90px}}
+@keyframes orbit{to{--a:360deg}}
+@keyframes bob{to{transform:translateY(-9px)}}
+@keyframes breathe{to{opacity:.72}}
+@keyframes sway{to{transform:translate3d(3%,2.5%,0) scale(1.06)}}
+@keyframes tick{from{stroke-dashoffset:1}}
+html.anim .nav{animation:fade .7s ease both}
+html.anim .hero h1 .ln>span{animation:lineup .95s var(--glide) both;animation-delay:calc(.12s + var(--i) * .13s)}
+html.anim .pitch{animation:rise .8s var(--glide) .62s both}
+html.anim .cta{animation:rise .8s var(--glide) .76s both}
+html.anim .ladder::before{animation:fromleft 1.5s var(--glide) 1.05s both}
+html.anim .lfly{opacity:1;animation:fly 1.5s var(--glide) 1.05s both,fade .3s ease 1.05s both}
+html.anim .ladder li{animation:rise .6s var(--glide) both;animation-delay:calc(1.1s + var(--i) * .22s)}
+html.anim .ladder .ep i.on{transform-origin:bottom;animation:stripe .45s ease both;animation-delay:calc(1.35s + var(--i) * .22s + var(--n) * .09s)}
+html.anim .rise{animation:mockup 1.2s var(--glide) 1.25s both}
+html.anim .shot::before{opacity:1;animation:orbit 2.6s cubic-bezier(.45,0,.3,1) 1.9s 1 both,fade .5s ease 4.3s reverse forwards}
+html.anim .shot tbody tr{animation:rise .5s var(--glide) both;animation-delay:calc(1.9s + var(--i) * .1s)}
+html.anim .shot .mt u i{animation:fromleft .9s var(--glide) both;animation-delay:calc(2.1s + var(--i) * .1s)}
+html.anim .chip{animation:rise .7s var(--settle) both;animation-delay:calc(2.5s + var(--i) * .16s)}
+html.anim .horizon{animation:fade 1.8s ease .2s both}
+html.full .chip>*{animation:bob 6s ease-in-out infinite alternate;animation-delay:calc(var(--i) * -1.7s)}
+html.full .glow{animation:sway 26s ease-in-out infinite alternate}html.full .glow.deep{animation-duration:34s;animation-direction:alternate-reverse}
+html.full .hero .horizon,html.full .final .horizon{animation:fade 1.8s ease .2s both,breathe 9s ease-in-out 2s infinite alternate}
+html.full .shot:hover::before{opacity:1;animation:orbit 3.2s linear infinite}
+@media (min-width:900px){html.anim .hero h1 .ln>span{animation:lineup .95s var(--glide) both,widen 1.25s var(--glide) both;animation-delay:calc(.12s + var(--i) * .13s)}}
+/* things further down arrive as you reach them, each kind in its own way */
+html.anim [data-rv]{opacity:0;translate:0 26px;transition:opacity .7s var(--glide),translate .7s var(--glide);transition-delay:calc(var(--i,0) * 70ms)}
+html.anim [data-rv].in{opacity:1;translate:0 0}
+html.anim [data-rv=title]{opacity:1;translate:none}html.anim [data-rv=title]>span{display:inline-block;clip-path:inset(0 100% -10% 0);transition:clip-path 1.1s var(--glide)}html.anim [data-rv=title].in>span{clip-path:inset(0 0 -10% 0)}
+html.anim [data-rv=wide]{font-stretch:78%;transition:opacity .9s var(--glide),translate .9s var(--glide),font-stretch 1.2s var(--glide)}html.anim [data-rv=wide].in{font-stretch:125%}
+html.anim [data-rv=tilt]{rotate:x 14deg;translate:0 40px;transition:opacity .7s var(--glide),translate .8s var(--glide),rotate .8s var(--glide);transition-delay:calc(var(--i,0) * 80ms)}html.anim [data-rv=tilt].in{rotate:x 0deg}
+html.anim .trust [data-rv]:not(.in) svg path{stroke-dashoffset:1}html.anim .trust [data-rv].in svg path{animation:tick .6s var(--glide) .3s both}
+
+/* ---------- smaller screens */
+@media (max-width:1080px){.bento{grid-template-columns:repeat(4,minmax(0,1fr))}.fcard,.fcard.wide{grid-column:span 2}}
+@media (max-width:980px){
+  .ladder{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:26px}
+  .steps{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:34px}.steps::before,.steps::after{display:none}.steps li{border-top:2px solid var(--line-2);transition:border-color .5s}.steps li.on{border-top-color:var(--navy)}.steps li::after{top:-7px}
+  .figs{grid-template-columns:repeat(2,minmax(0,1fr))}.shot .c-loc{display:none}.chip.c3{display:none}
+}
+@media (max-width:760px){
+  body{font-size:16px}.links{display:none}.menu{display:block}.nav .btn{display:none}
+  .hero-in{padding-top:118px}.hero h1{letter-spacing:-.02em;font-stretch:112%}.pitch{font-size:17px;margin:22px 0 28px}
+  .cta .btn{flex:1 1 150px}
+  .ladderwrap{margin-top:44px}.ladder{grid-template-columns:minmax(0,1fr);row-gap:0}.ladder::before{inset:4px auto 22px 3px;width:1px;height:auto;background:linear-gradient(180deg,rgba(124,196,255,.5),rgba(245,179,1,.7));transform-origin:top}.lfly{display:none}
+  .ladder li{display:grid;grid-template-columns:auto 1fr;gap:0 12px;align-items:center;padding:0 0 18px 26px}.ladder li::before{top:7px}.ladder b{margin:0}.ladder li>span:not(.ep){grid-column:2}.ladder li:hover{translate:none}
+  .stagewrap{margin-top:56px;padding-bottom:64px;perspective:none}.shot{rotate:none;scale:1;transform:none}.chip{display:none}
+  .sbar span:not(.on),.shot .c-stage .lbl,.shot .c-act,.mt u{display:none}.shot th,.shot td{padding-inline:14px}.shead{padding-inline:14px}.shot td{white-space:normal}
+  section{padding-block:68px}.steps,.trust,.figs{grid-template-columns:minmax(0,1fr)}.bento{grid-template-columns:minmax(0,1fr);perspective:none}.fcard,.fcard.wide{grid-column:auto;transform:none}
+  .final{padding-block:84px 92px}.horizon{bottom:-58vw;width:240vw;height:120vw}.final .horizon{bottom:-70vw}
+}
+@media (max-width:760px){html.anim .ladder::before{animation-name:fromtop}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="progress" aria-hidden="true"></div>
+<header class="nav" id="nav"><div class="wrap">
+  <a class="brand" href="#top"><span data-logo></span><span data-name>OfferPilot</span></a>
+  <nav class="links" aria-label="Primary"><a href="#how">How it works</a><a href="#features">Features</a><a href="#trust">Safety</a><a href="#faq">Questions</a><i class="navink" aria-hidden="true"></i></nav>
+  <a class="btn primary sm" href="/">Open the app</a>
+  <button class="menu" id="menu" aria-expanded="false" aria-controls="sheet" aria-label="Menu"><i></i><i></i></button>
+</div></header>
+<div class="sheet" id="sheet" aria-hidden="true">
+  <a href="#how" style="--i:0">How it works</a><a href="#features" style="--i:1">Features</a><a href="#trust" style="--i:2">Safety</a><a href="#faq" style="--i:3">Questions</a>
+  <a class="btn primary" href="/">Open the app</a>
+</div>
+
+<main>
+<section class="hero dark" id="top" style="padding-block:0">
+  <div class="sky" aria-hidden="true"><div class="glow cool"></div><div class="glow deep"></div><div class="grid"></div><div class="light"></div><canvas id="sky"></canvas><div class="horizon"></div><div class="grain" style="position:absolute;inset:0"></div></div>
+  <div class="wrap hero-in">
+    <h1><span class="ln"><span style="--i:0">Land interviews,</span></span> <span class="ln"><span style="--i:1">not busywork.</span></span></h1>
+    <p class="pitch" data-pitch>Finds the right jobs, writes a tailored resume and cover letter for each one, and helps you apply — while you stay in control of every send.</p>
+    <div class="cta"><a class="btn primary" href="/">Get started<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn ghost" href="#how">See how it works</a></div>
+    <div class="ladderwrap"><ol class="ladder" aria-label="The stages of a job, from match to offer">
+      <li style="--i:0"><span class="ep" aria-hidden="true"><i></i><i></i><i></i><i></i></span><b>Matched</b><span>Scored against your resume</span></li>
+      <li style="--i:1"><span class="ep" aria-hidden="true"><i class="on" style="--n:0"></i><i></i><i></i><i></i></span><b>Ready for you</b><span>Written, checked, waiting for your OK</span></li>
+      <li style="--i:2"><span class="ep" aria-hidden="true"><i class="on" style="--n:0"></i><i class="on" style="--n:1"></i><i></i><i></i></span><b>Applied</b><span>Sent only after you approve</span></li>
+      <li style="--i:3"><span class="ep" aria-hidden="true"><i class="on" style="--n:0"></i><i class="on" style="--n:1"></i><i class="on" style="--n:2"></i><i></i></span><b>Interview</b><span>Prep kit and practice ready</span></li>
+      <li style="--i:4"><span class="ep" aria-hidden="true"><i class="on" style="--n:0"></i><i class="on" style="--n:1"></i><i class="on" style="--n:2"></i><i class="on" style="--n:3"></i></span><b>Offer</b><span>Compared and negotiated</span></li>
+    </ol><div class="lfly" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M1 3l14 5-14 5 3-5z"/></svg></div></div>
+  </div>
+  <div class="wrap stagewrap" aria-hidden="true"><div class="rise">
+    <div class="shot" data-tilt="3"><div class="shot-in">
+      <div class="sbar"><span data-logo style="padding:0"></span><b data-name>OfferPilot</b><span>Dashboard</span><span class="on">Jobs</span><span>Applications</span><span>Interviews</span><span>Inbox</span><em>Find new jobs</em></div>
+      <div class="shead"><b>Jobs</b><span>Matched roles, prepared applications and everything in between</span></div>
+      <table><thead><tr><th>Job</th><th class="c-stage">Stage</th><th class="c-loc">Location</th><th>Match</th><th class="c-act"></th></tr></thead><tbody>
+        <tr style="--i:0"><td><b>Detection Engineer</b><small>Globex</small></td><td class="c-stage"><span class="st"><span class="ep"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="lbl"><span>Interview</span></span></span></td><td class="c-loc">Remote, India</td><td><span class="mt"><u><i style="width:82%"></i></u>82</span></td><td class="c-act"><span class="act">Open</span></td></tr>
+        <tr style="--i:1"><td><b>Security Operations Analyst</b><small>Acme Cloud</small></td><td class="c-stage"><span class="st"><span class="ep"><i class="on"></i><i class="on"></i><i></i><i></i></span><span class="lbl"><span>Applied</span></span></span></td><td class="c-loc">Pune</td><td><span class="mt"><u><i style="width:78%"></i></u>78</span></td><td class="c-act"><span class="act">Open</span></td></tr>
+        <tr style="--i:2" id="story"><td><b>Cloud Security Engineer</b><small>Initech</small></td><td class="c-stage"><span class="st"><span class="ep"><i class="on"></i><i id="story-stripe"></i><i></i><i></i></span><span class="lbl"><span>Ready for you</span><span>Applied</span></span></span></td><td class="c-loc">Bengaluru</td><td><span class="mt"><u><i style="width:74%"></i></u>74</span></td><td class="c-act"><span class="act">Approve</span></td></tr>
+        <tr style="--i:3"><td><b>Application Security Engineer</b><small>Soylent Systems</small></td><td class="c-stage"><span class="st"><span class="ep"><i></i><i></i><i></i><i></i></span><span class="lbl"><span>New</span></span></span></td><td class="c-loc">Remote</td><td><span class="mt"><u><i style="width:66%"></i></u>66</span></td><td class="c-act"><span class="act">Prepare</span></td></tr>
+      </tbody></table>
+    </div></div>
+    <div class="chip c1" style="--i:0"><span style="display:flex;align-items:center;gap:10px"><svg viewBox="0 0 24 24" fill="none" stroke="#56D6A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="m9 12 2 2 4-4"/></svg><span><b>Fact check passed</b><small>0 invented claims</small></span></span></div>
+    <div class="chip c2" style="--i:1"><span style="display:flex;align-items:center;gap:10px"><span class="ring"><svg viewBox="0 0 38 38"><circle cx="19" cy="19" r="16" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="3"/><circle cx="19" cy="19" r="16" fill="none" stroke="#F5B301" stroke-width="3" stroke-linecap="round" stroke-dasharray="82 100" pathLength="100" transform="rotate(-90 19 19)"/></svg>82</span><span><b>Strong match</b><small>7 of 8 keywords covered</small></span></span></div>
+    <div class="chip c3" style="--i:2"><span style="display:flex;align-items:center;gap:10px"><svg viewBox="0 0 24 24" fill="none" stroke="#7CC4FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span><b>Interview tomorrow</b><small>Prep kit ready</small></span></span></div>
+  </div></div>
+</section>
+
+<section id="how"><div class="wrap">
+  <h2 data-rv="title"><span>From “I should apply” to “applied” in four steps</span></h2>
+  <p class="lead" data-rv>Upload your resume once. The copilot does the searching, reading and writing; you make the decisions.</p>
+  <ol class="steps" id="steps">
+    <li><h3>Upload your resume</h3><p>It reads your experience, skills and projects, and checks every extracted fact against your file.</p></li>
+    <li><h3>Get matched</h3><p>Roles come from job boards, company career sites and the job-alert emails already in your inbox, each scored against you.</p></li>
+    <li><h3>Review tailored applications</h3><p>A resume and cover letter written for each job, with every change highlighted. Edit anything, then approve.</p></li>
+    <li><h3>Apply and follow through</h3><p>Sends by email or guides you through the company's form, reads recruiter replies, drafts responses and prepares you for interviews.</p></li>
+  </ol></div></section>
+
+<section id="features" class="feats dark">
+  <div class="sky" aria-hidden="true"><div class="glow cool"></div><div class="grid"></div><div class="grain" style="position:absolute;inset:0"></div></div>
+  <div class="wrap" style="position:relative"><h2 data-rv="title"><span>Everything a serious job search needs</span></h2>
+  <div class="bento">
+    <div class="fcard wide" data-rv="tilt" data-tilt="4" style="--i:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path pathLength="1" d="m9 12 2 2 4-4"/></svg>
+      <h3>Tailoring that never lies</h3><p>Every resume and letter passes a fact-checker. A skill that isn't in your profile can't appear as yours; it's shown to you as a gap instead.</p>
+      <div class="demo" aria-hidden="true"><del>Worked on alerts</del> <ins>Automated triage of phishing alerts with Python</ins>, <ins>closing 75% without an analyst</ins>.<div class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>Every phrase traced to your resume</div></div></div>
+    <div class="fcard wide" data-rv="tilt" data-tilt="4" style="--i:1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle pathLength="1" cx="12" cy="12" r="9"/><path pathLength="1" d="m8.5 12.5 2.5 2.5 4.5-5.5"/></svg>
+      <h3>A verdict on every job</h3><p>“Should I apply?” answered with reasons: what you cover, what's missing, and the experience asked against yours.</p>
+      <div class="demo" aria-hidden="true"><ul><li class="good"><b>✓</b><span><strong>Worth applying.</strong> You cover Python, SIEM and incident response.</span></li><li class="care"><b>!</b><span>Asks for 4 years; you have 3.</span></li></ul></div></div>
+    <div class="fcard" data-rv="tilt" data-tilt="5" style="--i:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle pathLength="1" cx="11" cy="11" r="7"/><path pathLength="1" d="m20 20-3.5-3.5"/></svg><h3>Jobs from everywhere that's allowed</h3><p>Remote boards, public company career sites, and your LinkedIn, Naukri and Glassdoor alert emails, without scraping accounts that get banned.</p></div>
+    <div class="fcard" data-rv="tilt" data-tilt="5" style="--i:1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect pathLength="1" x="2" y="4" width="20" height="16" rx="2"/><path pathLength="1" d="m22 7-10 6L2 7"/></svg><h3>An inbox that works for you</h3><p>Recruiter replies are sorted into interviews, questions and rejections, linked to the right application, with reply drafts ready.</p></div>
+    <div class="fcard" data-rv="tilt" data-tilt="5" style="--i:2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M22 2 11 13"/><path pathLength="1" d="M22 2 15 22l-4-9-9-4z"/></svg><h3>Outreach to the people who hire</h3><p>A personal email and a tailored CV for a recruiter you found. You approve every send, within a daily limit, with one polite follow-up.</p></div>
+    <div class="fcard" data-rv="tilt" data-tilt="5" style="--i:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect pathLength="1" x="3" y="4" width="18" height="18" rx="2"/><path pathLength="1" d="M16 2v4M8 2v4M3 10h18"/></svg><h3>Interview prep for each job</h3><p>Likely questions with talking points from your real experience, practice with feedback, and offers compared side by side.</p></div>
+    <div class="fcard" data-rv="tilt" data-tilt="5" style="--i:1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect pathLength="1" x="4" y="3" width="16" height="18" rx="2"/><path pathLength="1" d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2"/></svg><h3>Company research</h3><p>Hiring momentum, recent news and public security signals for every employer: the context that wins interviews.</p></div>
+    <div class="fcard" data-rv="tilt" data-tilt="5" style="--i:2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M3 3v18h18"/><path pathLength="1" d="M8 17v-5M13 17V8M18 17v-9"/></svg><h3>Insights that tell you what to learn</h3><p>Which skills employers ask for most, where you match and where you don't, pay by role and city, and how your search converts.</p></div>
+  </div></div></section>
+
+<section id="trust"><div class="wrap">
+  <h2 data-rv="title"><span>You stay in control</span></h2>
+  <p class="lead" data-rv>Built so it can't embarrass you, spam recruiters or put your accounts at risk. These are rules in the product, not promises.</p>
+  <div class="figs" id="figs" data-rv>
+    <div><b data-to="0" data-from="9">0</b><span>claims on a resume or letter that aren't in your profile</span></div>
+    <div><b data-to="10">10</b><span>recruiter emails a day at most, unless you change the limit</span></div>
+    <div><b data-to="30">30</b><span>days before the same person can be written to again</span></div>
+    <div><b data-to="1">1</b><span>follow-up to a recruiter, then it stops</span></div>
+  </div>
+  <div class="trust">
+    <div data-rv style="--i:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="m5 12 5 5L20 7"/></svg><b>Nothing sends without you</b><span>Every application waits for your approval. Practice mode lets you try everything first.</span></div>
+    <div data-rv style="--i:1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="m5 12 5 5L20 7"/></svg><b>Grounded in your real experience</b><span>A fact-checker blocks invented skills, employers, years or numbers before you ever see them.</span></div>
+    <div data-rv style="--i:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="m5 12 5 5L20 7"/></svg><b>Minimal Gmail access</b><span>Send and read-only permissions. Only job-related mail is read; everything else is ignored and never stored.</span></div>
+    <div data-rv style="--i:1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="m5 12 5 5L20 7"/></svg><b>No account-risking automation</b><span>LinkedIn, Naukri and Glassdoor are never automated. Their jobs come in through the alert emails you already get.</span></div>
+  </div></div></section>
+
+<section id="faq" style="padding-top:0"><div class="wrap"><h2 data-rv="title"><span>Questions</span></h2>
+  <div class="faq" data-rv>
+    <details><summary>Will it apply to jobs without asking me?<i aria-hidden="true"></i></summary><div class="ans"><p>No. Every application is prepared and then waits for your approval. There's an optional Autopilot for very strong email matches with a daily cap, and it's off by default.</p></div></details>
+    <details><summary>Can it make things up on my resume?<i aria-hidden="true"></i></summary><div class="ans"><p>No. Tailoring can only select and rephrase facts from your own profile. A checker rejects anything it can't trace back to your resume: skills, tools, numbers or years of experience.</p></div></details>
+    <details><summary>Does it work with LinkedIn?<i aria-hidden="true"></i></summary><div class="ans"><p>Yes, through LinkedIn job-alert emails in your Gmail. It doesn't log into or scrape LinkedIn, because that gets personal accounts banned.</p></div></details>
+    <details><summary>Where is my data?<i aria-hidden="true"></i></summary><div class="ans"><p>On your own computer. Your profile, jobs and emails are stored locally, and the AI that writes your applications can run locally too. If you choose Claude instead, the text needed for each application is sent to Anthropic's API.</p></div></details>
+    <details><summary>What does it cost?<i aria-hidden="true"></i></summary><div class="ans"><p>It's free while in early access.</p></div></details>
+  </div></div></section>
+
+<section class="final dark">
+  <div class="sky" aria-hidden="true"><div class="glow cool" style="left:20%;top:-60%;width:60%"></div><div class="horizon"></div><div class="grain" style="position:absolute;inset:0"></div></div>
+  <div class="wrap"><h2 data-rv="wide">Ready for your next role?</h2><p data-rv>Upload a resume and see your first matches the same day.</p>
+    <div data-rv><a class="btn primary" href="/">Open the app<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></section>
+</main>
+<footer><div class="wrap"><span>© <span id="yr"></span> <span data-name>OfferPilot</span></span><span data-support></span></div></footer>
+
+<script>
+addEventListener("DOMContentLoaded", () => {
+  "use strict";
+  const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)], root = document.documentElement;
+  // brand
+  const B = window.BRAND || {};
+  $$("[data-name]").forEach(e => e.textContent = B.name || e.textContent);
+  $$("[data-logo]").forEach(e => e.innerHTML = B.logo || "");
+  $$("[data-pitch]").forEach(e => e.textContent = B.pitch || e.textContent);
+  $$("[data-support]").forEach(e => e.textContent = B.support ? "Support: " + B.support : "");
+  $("#yr").textContent = new Date().getFullYear();
+  if (B.name) document.title = `${B.name} — ${B.tagline}`;
+
+  // the motion level follows the app's setting on this computer, and the system preference
+  try { const a = JSON.parse(localStorage.getItem("a11y") || "{}"); root.dataset.fx = a.motion ? "off" : a.fx === "calm" ? "calm" : "full"; if (a.motion) root.dataset.motion = "reduce"; } catch {}
+  const moves = FX.moves(), full = FX.full();
+  const start = () => { root.classList.toggle("anim", moves); root.classList.toggle("full", full); };
+  (document.fonts && document.fonts.ready ? Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 900))]) : Promise.resolve()).then(start);   // the headline waits for its typeface
+
+  // sky, pointer light, lean and pull
+  const hero = $(".hero");
+  const sky = FX.sky($("#sky"), { host: hero });
+  FX.pointer({ spot: ".hero, .fcard", tilt: ".fcard, .shot", magnet: ".btn" });
+
+  // one scroll reader: progress line, navigation, the product levelling out, the route through the four steps
+  const nav = $("#nav"), bar = $(".progress"), shot = $(".shot"), steps = $("#steps"), stepLis = $$("li", steps);
+  let lastY = scrollY, due = false;
+  const clamp = v => Math.max(0, Math.min(1, v));
+  function read() {
+    due = false;
+    const y = scrollY, h = innerHeight, max = document.documentElement.scrollHeight - h;
+    bar.style.setProperty("--p", max > 0 ? (y / max).toFixed(4) : 0);
+    nav.classList.toggle("scrolled", y > 24);
+    if (!$("#sheet").classList.contains("open")) { if (y > lastY + 6 && y > h * .7) nav.classList.add("away"); else if (y < lastY - 6 || y < h * .7) nav.classList.remove("away"); }
+    lastY = y;
+    if (moves) {
+      if (y < hero.offsetHeight) hero.style.setProperty("--sy", Math.round(y));
+      const r = shot.getBoundingClientRect(); shot.parentElement.parentElement.style.setProperty("--lv", clamp((h - r.top) / (h * .62)).toFixed(3));
+      const s = steps.getBoundingClientRect(), tp = clamp((h * .82 - s.top) / (h * .5));
+      steps.style.setProperty("--tp", tp.toFixed(3)); stepLis.forEach((li, i) => li.classList.toggle("on", tp > i / stepLis.length + .04));
+    }
+  }
+  addEventListener("scroll", () => { if (!due) { due = true; requestAnimationFrame(read); } }, { passive: true });
+  addEventListener("resize", read, { passive: true });
+  if (!moves) stepLis.forEach(li => li.classList.add("on"));
+  read();
+
+  // navigation: the marker slides to the section you are reading
+  const links = $$(".links a"), ink = $(".navink");
+  const mark = a => { links.forEach(l => l.classList.toggle("on", l === a)); if (!a) return ink.style.setProperty("--o", 0);
+    ink.style.setProperty("--x", a.offsetLeft + 12 + "px"); ink.style.setProperty("--w", a.offsetWidth - 24 + "px"); ink.style.setProperty("--o", 1); };
+  if ("IntersectionObserver" in window) {
+    const seen = new Map();
+    const spy = new IntersectionObserver(es => { es.forEach(e => seen.set(e.target.id, e.isIntersecting));
+      mark(links.find(l => seen.get(l.getAttribute("href").slice(1))) || null); }, { rootMargin: "-45% 0px -50% 0px" });
+    links.forEach(l => { const t = $(l.getAttribute("href")); if (t) spy.observe(t); });
+    // sections arrive as you reach them; figures count once
+    const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add("in"); io.unobserve(e.target);
+      if (e.target.id === "figs") $$("b[data-to]", e.target).forEach(b => FX.counter(b)); }), { rootMargin: "0px 0px -8% 0px", threshold: .12 });
+    $$("[data-rv]").forEach(el => io.observe(el));
+  } else $$("[data-rv]").forEach(el => el.classList.add("in"));
+
+  // phone menu
+  const menu = $("#menu"), sheet = $("#sheet");
+  const setMenu = open => { sheet.classList.toggle("open", open); sheet.setAttribute("aria-hidden", String(!open)); menu.setAttribute("aria-expanded", String(open)); document.body.style.overflow = open ? "hidden" : ""; nav.classList.remove("away");
+    $$("a", sheet).forEach(a => a.tabIndex = open ? 0 : -1); if (open) $("a", sheet).focus(); };
+  menu.onclick = () => setMenu(!sheet.classList.contains("open"));
+  $$("a", sheet).forEach(a => { a.tabIndex = -1; a.addEventListener("click", () => setMenu(false)); });
+  addEventListener("keydown", e => { if (e.key === "Escape" && sheet.classList.contains("open")) { setMenu(false); menu.focus(); } });
+
+  // answers open and close smoothly
+  $$("details").forEach(d => { const body = $(".ans", d);
+    $("summary", d).addEventListener("click", e => { if (!moves) return; e.preventDefault();
+      if (!d.open) { d.open = true; body.animate([{ height: "0px", opacity: 0 }, { height: body.offsetHeight + "px", opacity: 1 }], { duration: 320, easing: FX.GLIDE }); }
+      else body.animate([{ height: body.offsetHeight + "px", opacity: 1 }, { height: "0px", opacity: 0 }], { duration: 220, easing: "ease-in" }).onfinish = () => { d.open = false; }; }); });
+
+  // the picture tells its story once: an application is approved, and only then it is sent
+  if (full) { const row = $("#story");
+    setTimeout(() => row.classList.add("aim"), 4300);
+    setTimeout(() => { row.classList.add("sent"); const s = $("#story-stripe"); s.classList.add("on"); $(".act", row).textContent = "Open"; }, 5600); }
+});
+</script>
+</body>
+</html>

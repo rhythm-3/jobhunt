@@ -1,0 +1,586 @@
+[
+ {
+  "co": "Leucine",
+  "t": "Full-Stack Software Engineer",
+  "l": "Bengaluru",
+  "k": "WK",
+  "id": "7e1d941a-c1f1-4272-8840-977e5ea9a44c",
+  "url": "https://jobs.workable.com/view/gzfwHML6hbp5uPhAU6v835/full-stack-software-engineer-in-bengaluru-at-leucine",
+  "min": 2,
+  "focus": "fullstack",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_Leucine_Full_Stack_Software_Engineer.pdf",
+  "ats": true,
+  "cover": "8/9",
+  "miss": [
+   "redis"
+  ]
+ },
+ {
+  "co": "Antarctica",
+  "t": "Junior Backend Developer (Node.JS)",
+  "l": "Mumbai",
+  "k": "WK",
+  "id": "aa816561-fc43-4104-a01d-2acac07892d9",
+  "url": "https://jobs.workable.com/view/n4b9u2CkqUHSsZnYwvhkTg/hybrid-junior-backend-developer-(node.js)-in-mumbai-at-antarctica",
+  "min": 1,
+  "focus": "fullstack",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_Antarctica_Junior_Backend_Developer_Node_JS.pdf",
+  "ats": true,
+  "cover": "9/9",
+  "miss": []
+ },
+ {
+  "co": "Botsync",
+  "t": "Software Development Engineer - I (Integrations)",
+  "l": "Bengaluru",
+  "k": "WK",
+  "id": "925fd75a-7100-454d-87d7-a4caa141fd69",
+  "url": "https://jobs.workable.com/view/j5m5dFWXdRVsALuTzWhRy6/software-development-engineer---i-(integrations)-in-bengaluru-at-botsync",
+  "min": 1,
+  "focus": "python",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_Botsync_Software_Development_Engineer_I_Integrations.pdf",
+  "ats": true,
+  "cover": "4/4",
+  "miss": []
+ },
+ {
+  "co": "Teleport",
+  "t": "AI/ML Engineer",
+  "l": "Gurugram",
+  "k": "WK",
+  "id": "5546a0de-bb36-43ad-a9f3-1ddd3131552e",
+  "url": "https://jobs.workable.com/view/bwKGnMTHpB1yUNLRs9VRsw/hybrid-ai%2Fml-engineer-in-gurugram-at-teleport",
+  "min": 2,
+  "focus": "ai",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_Teleport_AI_ML_Engineer.pdf",
+  "ats": true,
+  "cover": "8/8",
+  "miss": []
+ },
+ {
+  "co": "Weekday AI",
+  "t": "AWS Developer",
+  "l": "Bengaluru",
+  "k": "WK",
+  "id": "e173b8ac-817a-4989-84c5-b94efef1e797",
+  "url": "https://jobs.workable.com/view/tQH1TBom9Byod7U1Jfa9B2/aws-developer-in-bengaluru-at-weekday-ai",
+  "min": 2,
+  "focus": "python",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_Weekday_AI_AWS_Developer.pdf",
+  "ats": true,
+  "cover": "9/9",
+  "miss": []
+ },
+ {
+  "co": "Stadium",
+  "t": "Javascript Developer (React.js)",
+  "l": "",
+  "k": "WK",
+  "id": "6d78be91-fc2d-42d7-96dc-f8cd51f0253d",
+  "url": "https://jobs.workable.com/view/ew3DhEpqMkq9kPLzbfesf2/remote-javascript-developer-(react.js)-in-india-at-stadium",
+  "min": 2,
+  "focus": "fullstack",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_Stadium_Javascript_Developer_React_js.pdf",
+  "ats": true,
+  "cover": "5/5",
+  "miss": []
+ },
+ {
+  "co": "Smartstream Limited",
+  "t": "Software Engineer",
+  "l": "Pune",
+  "k": "WK",
+  "id": "ae2e762a-dbd8-4a13-9ca8-3e936fe75ef0",
+  "url": "https://jobs.workable.com/view/nvvbdmrMT1ANhyjNNu2Bi3/software-engineer-in-pune-at-smartstream-limited",
+  "min": 2,
+  "focus": "python",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_Smartstream_Limited_Software_Engineer.pdf",
+  "ats": true,
+  "cover": "6/7",
+  "miss": [
+   "linux"
+  ]
+ },
+ {
+  "co": "Accellor",
+  "t": "AI Developer",
+  "l": "Bengaluru",
+  "k": "WK",
+  "id": "4744f236-1ec7-4b9a-b755-fc3d00904ac4",
+  "url": "https://jobs.workable.com/view/9NrmoyDDJeuuJXv31xpb4E/hybrid-ai-developer-in-bengaluru-at-accellor",
+  "min": 2,
+  "focus": "ai",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_Accellor_AI_Developer.pdf",
+  "ats": true,
+  "cover": "8/10",
+  "miss": [
+   "gcp",
+   "azure"
+  ]
+ },
+ {
+  "co": "AION",
+  "t": "Software Engineer, General",
+  "l": "Bengaluru",
+  "k": "WK",
+  "id": "9137bfd3-ffe9-4d43-9e96-992fa4a58ec0",
+  "url": "https://jobs.workable.com/view/iW4BJHnh14AvMAhtCs9vJ9/hybrid-software-engineer%2C-general-in-bengaluru-at-aion",
+  "min": 2,
+  "focus": "ai",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_AION_Software_Engineer_General.pdf",
+  "ats": true,
+  "cover": "13/18",
+  "miss": [
+   "kafka",
+   "redis",
+   "go",
+   "gcp",
+   "azure"
+  ]
+ },
+ {
+  "co": "Blue Machines AI",
+  "t": "Backend Engineer - SDE 2 (Voice AI / Telephony Platform)",
+  "l": "Bengaluru",
+  "k": "WK",
+  "id": "164e367d-33d1-4a80-a822-e01a1e704da2",
+  "url": "https://jobs.workable.com/view/3KKJGJ1YDLgEUq9RzeRdmj/backend-engineer---sde-2-(voice-ai-%2F-telephony-platform)-in-bengaluru-at-blue-machines-ai",
+  "min": 2,
+  "focus": "ai",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_Blue_Machines_AI_Backend_Engineer_SDE_2_Voice_AI_Telephony_P.pdf",
+  "ats": true,
+  "cover": "7/11",
+  "miss": [
+   "kafka",
+   "redis",
+   "gcp",
+   "mongodb"
+  ]
+ },
+ {
+  "co": "AJAIA",
+  "t": "Full Stack Developer",
+  "l": "None",
+  "k": "WK",
+  "id": "7dacf384-60c9-4441-bbff-51148735de97",
+  "url": "https://jobs.workable.com/view/gw6LT7fCAwVyRCKsc2miZZ/remote-full-stack-developer-in-india-at-ajaia",
+  "min": null,
+  "focus": "fullstack",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_AJAIA_Full_Stack_Developer.pdf",
+  "ats": true,
+  "cover": "2/3",
+  "miss": [
+   "llm"
+  ]
+ },
+ {
+  "co": "T-Tech",
+  "t": "Data & Integration Engineer (AI & Automation)",
+  "l": "",
+  "k": "WK",
+  "id": "30e03e71-285d-40eb-918b-164219fed95f",
+  "url": "https://jobs.workable.com/view/73487EwR13qDoLQA7xbBEp/remote-data-%26-integration-engineer-(ai-%26-automation)-in-india-at-t-tech",
+  "min": null,
+  "focus": "ai",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_T_Tech_Data_Integration_Engineer_AI_Automation.pdf",
+  "ats": true,
+  "cover": "4/4",
+  "miss": []
+ },
+ {
+  "co": "Salvo Software",
+  "t": "AI Developer",
+  "l": "Bengaluru",
+  "k": "WK",
+  "id": "fcc67cbe-3278-4557-b81a-78bf51f1d456",
+  "url": "https://jobs.workable.com/view/xdp9pzZtkCqpxozzwSWSCo/ai-developer-in-bengaluru-at-salvo-software",
+  "min": null,
+  "focus": "ai",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_Salvo_Software_AI_Developer.pdf",
+  "ats": true,
+  "cover": "9/10",
+  "miss": [
+   "azure"
+  ]
+ },
+ {
+  "co": "Unison Group",
+  "t": "Python React Fullstack Developer",
+  "l": "Chennai",
+  "k": "WK",
+  "id": "129637da-eaf5-4675-bd73-3bb78c19a235",
+  "url": "https://jobs.workable.com/view/3i7YouVBirr4Qx9n39Z16K/hybrid-python-react-fullstack-developer-in-chennai-at-unison-group",
+  "min": null,
+  "focus": "fullstack",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_Unison_Group_Python_React_Fullstack_Developer.pdf",
+  "ats": true,
+  "cover": "8/9",
+  "miss": [
+   "mongodb"
+  ]
+ },
+ {
+  "co": "Planso",
+  "t": "Junior AI Engineer",
+  "l": "Bengaluru",
+  "k": "WK",
+  "id": "c6358696-030a-474b-bdda-e7de183bc962",
+  "url": "https://jobs.workable.com/view/qtAgjX7JdguCYysHZemYcU/junior-ai-engineer-in-bengaluru-at-planso",
+  "min": null,
+  "focus": "ai",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_Planso_Junior_AI_Engineer.pdf",
+  "ats": true,
+  "cover": "6/7",
+  "miss": [
+   "fastapi"
+  ]
+ },
+ {
+  "co": "Infotel UK",
+  "t": "Java Full Stack Developer",
+  "l": "Chennai",
+  "k": "WK",
+  "id": "7c0b897f-5a45-4845-af70-0db8ec5c5e09",
+  "url": "https://jobs.workable.com/view/gjqseWGH7FbxYhU7MBguUH/java-full-stack-developer-in-chennai-at-infotel-uk",
+  "min": null,
+  "focus": "fullstack",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_Infotel_UK_Java_Full_Stack_Developer.pdf",
+  "ats": true,
+  "cover": "6/7",
+  "miss": [
+   "angular"
+  ]
+ },
+ {
+  "co": "QuantumLoopAI",
+  "t": "AI/ML & Prompt Engineer LLM, RAG & Voice Agent",
+  "l": "",
+  "k": "WK",
+  "id": "e28f3e71-acb7-423d-8e47-6d22824e06f3",
+  "url": "https://jobs.workable.com/view/tYD5q8zLN9ChDaVJUGEa8H/remote-ai%2Fml-%26-prompt-engineer-llm%2C-rag-%26-voice-agent-in-india-at-quantumloopai",
+  "min": null,
+  "focus": "ai",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_QuantumLoopAI_AI_ML_Prompt_Engineer_LLM_RAG_Voice_Agent.pdf",
+  "ats": true,
+  "cover": "8/10",
+  "miss": [
+   "azure",
+   "graphql"
+  ]
+ },
+ {
+  "co": "Huzzle",
+  "t": "Fullstack Engineer",
+  "l": "",
+  "k": "WK",
+  "id": "5571d6c4-b6f4-4557-9dd1-d552c3b5f324",
+  "url": "https://jobs.workable.com/view/bxXP78hwWUygiriQKXdxj5/remote-fullstack-engineer-in-india-at-huzzle",
+  "min": null,
+  "focus": "fullstack",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_Huzzle_Fullstack_Engineer.pdf",
+  "ats": true,
+  "cover": "10/13",
+  "miss": [
+   "redis",
+   "gcp",
+   "azure"
+  ]
+ },
+ {
+  "co": "Creative Chaos",
+  "t": "Full Stack Engineer - Python+React",
+  "l": "",
+  "k": "WK",
+  "id": "a2ae2634-b62a-43e8-9983-450e7d96bf20",
+  "url": "https://jobs.workable.com/view/m68yiTp2i7ijwTUgvqqgQ5/remote-full-stack-engineer---python%2Breact-in-india-at-creative-chaos",
+  "min": null,
+  "focus": "fullstack",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_Creative_Chaos_Full_Stack_Engineer_Python_React.pdf",
+  "ats": true,
+  "cover": "5/9",
+  "miss": [
+   "llm",
+   "django",
+   "flask",
+   "fastapi"
+  ]
+ },
+ {
+  "co": "Virallens",
+  "t": "Full Stack Developer",
+  "l": "Bengaluru",
+  "k": "WK",
+  "id": "e9e09c51-e9b0-40cb-a1bf-e83d4a5cd78c",
+  "url": "https://jobs.workable.com/view/uT3V221QtS6MvDKkqPrtXS/full-stack-developer-in-bengaluru-at-virallens",
+  "min": 3,
+  "focus": "fullstack",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_Virallens_Full_Stack_Developer.pdf",
+  "ats": true,
+  "cover": "12/15",
+  "miss": [
+   "llm",
+   "graphql",
+   "mongodb"
+  ]
+ },
+ {
+  "co": "Vinmar International",
+  "t": "Full Stack AI Engineer",
+  "l": "Mumbai",
+  "k": "WK",
+  "id": "e70b0cf1-514c-4d16-a4d3-675547b7caea",
+  "url": "https://jobs.workable.com/view/uwKzrnHPRhVCyyZd3VbPcQ/full-stack-ai-engineer-in-mumbai-at-vinmar-international",
+  "min": 3,
+  "focus": "ai",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_Vinmar_International_Full_Stack_AI_Engineer.pdf",
+  "ats": true,
+  "cover": "9/10",
+  "miss": [
+   "fastapi"
+  ]
+ },
+ {
+  "co": "Ottimate",
+  "t": "Software Engineer - Python",
+  "l": "Chennai",
+  "k": "WK",
+  "id": "a1d7d86e-80a3-43ab-aac5-16095eb7f3c2",
+  "url": "https://jobs.workable.com/view/kZ8PfN6kavB3Dab5EGX5fN/remote-software-engineer---python-in-chennai-at-ottimate",
+  "min": 3,
+  "focus": "python",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_Ottimate_Software_Engineer_Python.pdf",
+  "ats": true,
+  "cover": "2/4",
+  "miss": [
+   "django",
+   "angular"
+  ]
+ },
+ {
+  "co": "Lokal App",
+  "t": "SDE-2 Backend",
+  "l": "Bengaluru",
+  "k": "WK",
+  "id": "bbb2c773-7c54-4fdf-acf5-e3455e1f7917",
+  "url": "https://jobs.workable.com/view/pbj6zSy33BqboeTr1oJ31x/sde-2-backend-in-bengaluru-at-lokal-app",
+  "min": 3,
+  "focus": "python",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_Lokal_App_SDE_2_Backend.pdf",
+  "ats": true,
+  "cover": "7/9",
+  "miss": [
+   "gcp",
+   "azure"
+  ]
+ },
+ {
+  "co": "YouTrip",
+  "t": "Software Engineer II (Backend)",
+  "l": "Chennai",
+  "k": "WK",
+  "id": "4b379d54-34bd-4a6c-98ef-74d5a02ab41a",
+  "url": "https://jobs.workable.com/view/ahHjK8FaD5ardY2vbEPQTm/hybrid-software-engineer-ii-(backend)-in-chennai-at-youtrip",
+  "min": 3,
+  "focus": "ai",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_YouTrip_Software_Engineer_II_Backend.pdf",
+  "ats": true,
+  "cover": "3/3",
+  "miss": []
+ },
+ {
+  "co": "safe",
+  "t": "Software Development Engineer I",
+  "l": "Bengaluru Bengaluru",
+  "k": "LV",
+  "id": "91e23536-2a94-496c-9c74-9dbfd815923f",
+  "url": "https://jobs.lever.co/safe/91e23536-2a94-496c-9c74-9dbfd815923f",
+  "min": 1,
+  "focus": "python",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_safe_Software_Development_Engineer_I.pdf",
+  "ats": true,
+  "cover": "10/14",
+  "miss": [
+   "llm",
+   "go",
+   "gcp",
+   "azure"
+  ]
+ },
+ {
+  "co": "safe",
+  "t": "SDE II - AI Platform",
+  "l": "Bengaluru Bengaluru",
+  "k": "LV",
+  "id": "fb78afcd-5711-44d4-8533-56a6349dd528",
+  "url": "https://jobs.lever.co/safe/fb78afcd-5711-44d4-8533-56a6349dd528",
+  "min": 2,
+  "focus": "ai",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_safe_SDE_II_AI_Platform.pdf",
+  "ats": true,
+  "cover": "14/18",
+  "miss": [
+   "go",
+   "gcp",
+   "azure",
+   "linux"
+  ]
+ },
+ {
+  "co": "ConverseNow",
+  "t": "Back-End Developer (Job ID: 2266)",
+  "l": "Bengaluru Bengaluru",
+  "k": "LV",
+  "id": "833038b5-0ecd-448a-b973-b267fa5e4c13",
+  "url": "https://jobs.lever.co/ConverseNow/833038b5-0ecd-448a-b973-b267fa5e4c13",
+  "min": 1,
+  "focus": "python",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_ConverseNow_Back_End_Developer_Job_ID_2266.pdf",
+  "ats": true,
+  "cover": "2/2",
+  "miss": []
+ },
+ {
+  "co": "hackerrank",
+  "t": "Data Engineer II",
+  "l": "Hybrid in Bangalore, India",
+  "k": "GH",
+  "id": "8102780",
+  "url": "https://job-boards.greenhouse.io/hackerrank/jobs/8102780",
+  "min": 2,
+  "focus": "ai",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_hackerrank_Data_Engineer_II.pdf",
+  "ats": true,
+  "cover": "5/6",
+  "miss": [
+   "go"
+  ]
+ },
+ {
+  "co": "workato",
+  "t": "Automation Engineer",
+  "l": "Hyderabad, India",
+  "k": "GH",
+  "id": "8616337002",
+  "url": "https://www.workato.com/careers?gh_jid=8616337002#open-roles",
+  "min": 3,
+  "focus": "python",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_workato_Automation_Engineer.pdf",
+  "ats": true,
+  "cover": "10/11",
+  "miss": [
+   "linux"
+  ]
+ },
+ {
+  "co": "blackduck",
+  "t": "Software Engineer 2",
+  "l": "Bangalore",
+  "k": "GH",
+  "id": "5341035008",
+  "url": "https://job-boards.greenhouse.io/blackduck/jobs/5341035008",
+  "min": 3,
+  "focus": "java",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_blackduck_Software_Engineer_2.pdf",
+  "ats": true,
+  "cover": "8/10",
+  "miss": [
+   "kafka",
+   "azure"
+  ]
+ },
+ {
+  "co": "spreetail",
+  "t": "Software Engineer-II",
+  "l": "India India New Delhi",
+  "k": "LV",
+  "id": "65298690-8f7e-4749-a37e-69bb52085d93",
+  "url": "https://jobs.lever.co/spreetail/65298690-8f7e-4749-a37e-69bb52085d93",
+  "min": 3,
+  "focus": "ai",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_spreetail_Software_Engineer_II.pdf",
+  "ats": true,
+  "cover": "4/5",
+  "miss": [
+   "django"
+  ]
+ },
+ {
+  "co": "sigmoid",
+  "t": "Full Stack Software Development Engineer II",
+  "l": "Bengaluru, Karnataka, India",
+  "k": "GH",
+  "id": "8741978002",
+  "url": "https://job-boards.greenhouse.io/sigmoid/jobs/8741978002",
+  "min": 3,
+  "focus": "fullstack",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_sigmoid_Full_Stack_Software_Development_Engineer_II.pdf",
+  "ats": true,
+  "cover": "14/21",
+  "miss": [
+   "kafka",
+   "redis",
+   "gcp",
+   "azure",
+   "graphql",
+   "fastapi",
+   "mongodb"
+  ]
+ },
+ {
+  "co": "atlys",
+  "t": "Backend Engineer",
+  "l": "Delhi HQ",
+  "k": "AB",
+  "id": "a2158e46-0991-4235-aeec-758b1832c5fb",
+  "url": "https://jobs.ashbyhq.com/atlys/a2158e46-0991-4235-aeec-758b1832c5fb",
+  "min": 3,
+  "focus": "python",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_atlys_Backend_Engineer.pdf",
+  "ats": true,
+  "cover": "8/15",
+  "miss": [
+   "llm",
+   "kafka",
+   "redis",
+   "gcp",
+   "django",
+   "flask",
+   "fastapi"
+  ]
+ },
+ {
+  "co": "SAP Fioneer",
+  "t": "Cloud Native Full stack Java Developer",
+  "l": "Pune",
+  "k": "WK",
+  "id": "ead0dcd4-aea5-4062-bdcb-fce33b4fbeb1",
+  "url": "https://jobs.workable.com/view/uZLLaExSwHPuqTDiNTuk9D/cloud-native-full-stack-java-developer-in-pune-at-sap-fioneer",
+  "min": 3,
+  "focus": "fullstack",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_SAP_Fioneer_Cloud_Native_Full_stack_Java_Developer.pdf",
+  "ats": true,
+  "cover": "9/12",
+  "miss": [
+   "azure",
+   "hibernate",
+   "angular"
+  ]
+ },
+ {
+  "co": "Weekday AI",
+  "t": "Java Fullstack Developer",
+  "l": "Bengaluru",
+  "k": "WK",
+  "id": "fc5a051b-b281-4c4d-b64d-20847e3b8837",
+  "url": "https://jobs.workable.com/view/xan95DxtzvLXfGGBuUT4yk/java-fullstack-developer-in-bengaluru-at-weekday-ai",
+  "min": 3,
+  "focus": "fullstack",
+  "pdf": "/Users/adityasapra/job-agent/job-pack-2026-10-06/rhythm_v2/round3/Rhythm_Sharma_Resume_Weekday_AI_Java_Fullstack_Developer.pdf",
+  "ats": true,
+  "cover": "13/15",
+  "miss": [
+   "kafka",
+   "azure"
+  ]
+ }
+]

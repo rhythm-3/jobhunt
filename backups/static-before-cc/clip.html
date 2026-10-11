@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Save a job — OfferPilot</title>
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+<meta name="theme-color" content="#0B1A3B">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+<link rel="stylesheet" href="/static/deck.css">
+<script>(function(){var r=document.documentElement,t="dark";try{t=localStorage.getItem("theme")==="light"?"light":"dark";var a=JSON.parse(localStorage.getItem("a11y")||"{}");r.dataset.text=a.text||"normal";if(a.contrast)r.dataset.contrast="high";if(a.motion)r.dataset.motion="reduce";r.dataset.fx=a.motion?"off":a.fx==="calm"?"calm":"full"}catch(e){}r.dataset.theme=t;r.dataset.ui="deck"})();</script>
+<script src="/static/brand.js"></script>
+<style>
+  .clipwrap{max-width:820px;margin:0 auto;padding:20px 24px 60px}
+  .cliphead{max-width:820px}
+  a.brand{text-decoration:none;color:inherit}
+  .cform{display:grid;grid-template-columns:1fr 1fr;gap:12px 14px}.cform label{display:block;color:var(--ink-2);font-size:12.5px;font-weight:600}
+  .cform label>.input,.cform label>.textarea{margin-top:5px;font-weight:400}
+  .cform .span2{grid-column:1/-1}.cform textarea{min-height:320px}
+  .cform label.row{display:flex;color:var(--ink);font-size:13.5px;font-weight:400}
+  @media (max-width:640px){.cform{grid-template-columns:1fr}.clipwrap{padding-inline:16px}}
+  .result{text-align:center;padding:36px 20px}.result h2{margin:10px 0 6px}
+  .okmark{display:grid;place-items:center;width:56px;height:56px;margin:0 auto;border-radius:50%;background:var(--navy);color:var(--gold);font-size:28px;font-weight:700}
+</style>
+</head>
+<body>
+<header class="bar"><a class="brand" href="/" id="home"><span class="blogo" id="logo"></span><span class="bname" id="bname"></span></a></header>
+<div class="pagehead"><div class="ph-in cliphead"><div class="ph-text"><h1>Save a job</h1><p id="sub">Check the details, then save. Everything stays on your computer.</p></div></div></div>
+<main class="clipwrap">
+  <section class="card sec" id="formcard">
+    <div id="notice"></div>
+    <form class="cform" id="f" novalidate>
+      <label class="span2">Job title<input class="input" id="title" required maxlength="200"></label>
+      <label>Company<input class="input" id="company" maxlength="120"></label>
+      <label>Location<input class="input" id="location" maxlength="200" placeholder="e.g. Bengaluru, India · Remote"></label>
+      <label class="span2">Link<input class="input" id="url" placeholder="https://… (optional)"></label>
+      <label class="span2">Job description<textarea class="textarea" id="description" required placeholder="Paste the full job description here"></textarea></label>
+      <label class="span2 row"><input type="checkbox" id="prepare" checked> Prepare a tailored resume and cover letter right away</label>
+      <div class="span2 row"><span class="small muted grow" id="count"></span><button type="button" class="btn ghost" id="cancel">Cancel</button><button class="btn primary" id="save">Save job</button></div>
+    </form>
+  </section>
+  <section class="card sec result" id="done" hidden></section>
+</main>
+<div class="toasts" role="status" aria-live="polite"></div>
+<script>
+"use strict";
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const B = window.BRAND || { name: "OfferPilot", logo: "" };
+$("#logo").innerHTML = B.logo; $("#bname").textContent = B.name; $("#home").setAttribute("aria-label", `${B.name}: open the app`); document.title = `Save a job — ${B.name}`;
+function toast(m) { const t = document.createElement("div"); t.className = "toast"; t.textContent = m; $(".toasts").append(t); setTimeout(() => t.remove(), 4000); }
+
+// data from the bookmarklet travels in the URL fragment: it never reaches a server log
+let d = {};
+if (location.hash.length > 1) {
+  try { d = JSON.parse(decodeURIComponent(location.hash.slice(1))); } catch { $("#notice").innerHTML = '<div class="warnbox">Couldn\'t read that page\'s data — paste the details below.</div>'; }
+  history.replaceState(null, "", location.pathname);
+}
+(function guess() {                                    // tidy what the page gave us
+  const pt = String(d.page_title || "").replace(/^\(\d+\)\s*/, "");
+  const parts = pt.split(/\s+[|–—]\s+|\s+-\s+/).map(x => x.trim()).filter(Boolean);
+  const site = /^(linkedin|naukri(\.com)?|indeed|glassdoor|foundit|monster|careers?|jobs?|job search)$/i;
+  const rest = parts.filter(x => !site.test(x));
+  if (!d.title || d.title === d.page_title) d.title = rest[0] || d.title || "";
+  if (!d.company) { const at = pt.match(/\bat\s+([^|–—]+?)(?:\s+[|–—-]\s+|$)/i); d.company = at ? at[1].trim() : (rest[1] || ""); }
+  d.description = String(d.description || "").replace(/\r/g, "").replace(/[ \t]+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
+})();
+for (const k of ["title", "company", "location", "url", "description"]) $("#" + k).value = String(d[k] || "").trim();
+if (d.url) $("#sub").textContent = `From ${new URL(d.url).hostname.replace("www.", "")} — check the details, then save. Everything stays on your computer.`;
+const count = () => $("#count").textContent = `${$("#description").value.trim().split(/\s+/).filter(Boolean).length} words in the description`;
+$("#description").oninput = count; count();
+$("#cancel").onclick = () => { window.close(); location.href = "/"; };
+$(d.title ? "#description" : "#title").focus();
+
+$("#f").onsubmit = async e => {
+  e.preventDefault();
+  const body = { title: $("#title").value.trim(), company: $("#company").value.trim(), location: $("#location").value.trim(),
+                 url: $("#url").value.trim(), description: $("#description").value.trim(), prepare: $("#prepare").checked };
+  if (!body.title) return toast("Add the job title"), $("#title").focus();
+  if (body.description.length < 80) return toast("Paste the job description (a few sentences at least)"), $("#description").focus();
+  $("#save").disabled = true; $("#save").textContent = "Saving…";
+  try {
+    const tok = localStorage.getItem("token");
+    const r = await fetch("/api/clip", { method: "POST", headers: { "Content-Type": "application/json", ...(tok ? { Authorization: "Bearer " + tok } : {}) }, body: JSON.stringify(body) });
+    const out = await r.json();
+    if (!r.ok) throw new Error(typeof out.detail === "string" ? out.detail : "Couldn't save");
+    const pctS = out.match_score == null ? "" : `${Math.round(out.match_score * 100)}% match`;
+    $("#formcard").hidden = true;
+    $("#done").hidden = false;
+    $("#done").innerHTML = `<div class="okmark" aria-hidden="true">✓</div><h2>${out.duplicate ? "Already in your list — description updated" : "Saved"}</h2>
+      <p class="muted">${esc(body.title)}${body.company ? " · " + esc(body.company) : ""}${pctS ? " · " + pctS : ""}</p>
+      <p class="small muted">${out.status === "awaiting_approval" ? "Your tailored application is ready to review." : body.prepare && !out.duplicate ? "Your tailored resume and cover letter are being written — about a minute." : ""}</p>
+      <div class="row" style="justify-content:center;margin-top:16px"><a class="btn primary" href="/#jobs/${encodeURIComponent(out.run_id)}">Open in ${esc(B.name)}</a><button class="btn" id="closeme">Close this tab</button></div>`;
+    $("#closeme").onclick = () => window.close();
+    $("#done a").focus();
+  } catch (x) { toast(x.message); $("#save").disabled = false; $("#save").textContent = "Save job"; }
+};
+</script>
+</body>
+</html>

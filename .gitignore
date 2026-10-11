@@ -1,0 +1,5 @@
+.env
+*.db*
+out/
+__pycache__/
+profile.json

@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0B1A3B">
+<title>OfferPilot — Your AI job-search copilot</title>
+<meta name="description" content="Finds the right jobs, writes a tailored resume and cover letter for each one, and helps you apply — while you stay in control of every send.">
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+<script src="/static/brand.js"></script>
+<style>
+/* Same identity as the app: navy and gold, Archivo, squared shapes, 1px rules. The stripes are the stage of a job. */
+:root{--navy:#0B1A3B;--navy-2:#13264F;--gold:#F5B301;--gold-2:#FFC933;--gold-edge:#C28E00;--bg:#F3F5F9;--panel:#FFFFFF;--panel-2:#F2F4F8;--panel-3:#E3E8F0;
+  --ink:#0D1B33;--ink-2:#3C4963;--mute:#5D6982;--line:#DCE1EA;--line-2:#BDC6D5;--accent:#1B4FD8;--emerald:#0A7548;color-scheme:light}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 Archivo,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+h1,h2,h3{margin:0;line-height:1.1}
+h2{font-size:clamp(27px,3.5vw,40px);font-weight:700;font-stretch:114%;letter-spacing:-.015em}
+h3{font-size:18px;font-weight:650;line-height:1.3}
+p{margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:24px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.top :focus-visible,.safe :focus-visible{outline-color:var(--gold)}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:46px;padding:0 22px;border:1px solid var(--line-2);border-radius:4px;background:var(--panel);color:var(--ink);font-size:16px;font-weight:650;text-decoration:none;white-space:nowrap;transition:background .12s,border-color .12s}
+.btn:hover{background:var(--panel-2);border-color:var(--mute)}
+.btn.primary{background:var(--gold);border-color:var(--gold-edge);color:var(--navy)}.btn.primary:hover{background:var(--gold-2)}
+.btn.onnavy{background:transparent;border-color:rgba(255,255,255,.34);color:#fff}.btn.onnavy:hover{background:rgba(255,255,255,.1);border-color:#fff}
+.btn.sm{height:36px;padding:0 14px;font-size:14.5px}
+
+/* navy opening band */
+.top{background:var(--navy);color:#fff}
+nav{position:sticky;top:0;z-index:10;background:var(--navy);border-bottom:1px solid rgba(255,255,255,.12)}
+nav .wrap{display:flex;align-items:center;gap:26px;height:60px}
+.brand{display:flex;align-items:center;gap:10px;color:#fff;font-size:19px;font-weight:700;font-stretch:112%;letter-spacing:-.01em;text-decoration:none}
+.brand svg{display:block;width:30px;height:30px}
+.links{display:flex;gap:24px;margin-left:auto}
+.links a{color:rgba(255,255,255,.76);font-size:15px;font-weight:550;text-decoration:none}.links a:hover{color:#fff}
+.hero{padding-block:76px 0}
+.hero h1{max-width:14ch;font-size:clamp(42px,6.6vw,88px);line-height:.98;font-weight:800;font-stretch:125%;letter-spacing:-.022em}
+.hero .pitch{max-width:56ch;margin:24px 0 30px;color:rgba(255,255,255,.82);font-size:19px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+/* the five stages, each with its stripes */
+.ladder{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin:56px 0 0;padding:0;border-top:1px solid rgba(255,255,255,.16);list-style:none}
+.ladder li{padding:18px 16px 0 0}
+.ladder b{display:block;margin-top:10px;font-size:16px;font-weight:650}
+.ladder li>span:not(.ep){display:block;color:rgba(255,255,255,.7);font-size:14.5px;line-height:1.45}
+.ep{display:inline-flex;align-items:center;gap:3px;height:22px;padding:0 6px;border-radius:3px;background:rgba(255,255,255,.1);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.ep i{width:4px;height:12px;border-radius:1px;background:rgba(255,255,255,.22)}
+.ep i.on{background:var(--gold);animation:stripe .5s ease both;animation-delay:calc(.25s + var(--n) * .12s)}
+@keyframes stripe{from{background:rgba(255,255,255,.22);transform:scaleY(.4)}to{background:var(--gold);transform:none}}
+/* a picture of the product: the jobs table */
+.shotwrap{margin-top:60px;background:linear-gradient(var(--navy) 46%,var(--bg) 46%)}
+.shot{overflow:hidden;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);box-shadow:0 30px 70px rgba(11,26,59,.28)}
+.sbar{display:flex;align-items:center;gap:6px;height:46px;padding:0 16px;background:var(--navy);color:#fff;font-size:13.5px}
+.sbar svg{display:block;width:22px;height:22px}.sbar b{margin:0 14px 0 4px;font-size:15px;font-weight:700;font-stretch:112%}
+.sbar span{position:relative;display:flex;align-items:center;height:100%;padding:0 10px;color:rgba(255,255,255,.72);font-weight:550}
+.sbar span.on{color:#fff}.sbar span.on::after{content:"";position:absolute;left:10px;right:10px;bottom:0;height:3px;background:var(--gold)}
+.sbar em{margin-left:auto;padding:0 12px;border-radius:4px;background:var(--gold);color:var(--navy);font-size:13px;font-style:normal;font-weight:650;line-height:28px}
+.shead{padding:14px 20px 12px;border-bottom:1px solid var(--line)}
+.shead b{display:block;font-size:20px;font-weight:700;font-stretch:114%;line-height:1.2}.shead span{color:var(--mute);font-size:13px}
+.shot table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.4}
+.shot th{padding:8px 20px;background:var(--panel-2);border-bottom:1px solid var(--line);color:var(--mute);font-size:12.5px;font-weight:600;font-stretch:94%;text-align:left}
+.shot td{padding:11px 20px;border-top:1px solid var(--line);vertical-align:middle;white-space:nowrap}
+.shot tr:first-child td{border-top:0}
+.shot td b{display:block;font-weight:600}.shot td small{color:var(--mute);font-size:12.5px}
+.st{display:inline-flex;align-items:center;gap:8px}
+.st .ep{height:16px;gap:2px;padding:0 4px;border-radius:2px;background:var(--navy);box-shadow:none}.st .ep i{width:3px;height:9px;animation:none}
+.mt{display:inline-flex;align-items:center;gap:8px;font-weight:650;font-variant-numeric:tabular-nums}
+.mt u{display:block;width:54px;height:6px;border-radius:1px;background:var(--panel-3);text-decoration:none}.mt u i{display:block;height:100%;background:var(--emerald)}
+.act{display:inline-block;padding:0 10px;border:1px solid var(--line-2);border-radius:4px;font-size:12.5px;font-weight:550;line-height:26px}
+.shot td:last-child{text-align:right}
+
+section{padding-block:84px}
+.lead{max-width:62ch;margin-top:14px;color:var(--ink-2)}
+/* four steps: a real sequence, so they are numbered */
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:40px 0 0;padding:0;border-top:2px solid var(--navy);list-style:none;counter-reset:s}
+.steps li{padding:22px 24px 0 0;counter-increment:s}
+.steps li::before{content:counter(s);display:block;margin-bottom:12px;color:var(--navy);font-size:44px;line-height:1;font-weight:800;font-stretch:125%}
+.steps p,.feat p{margin-top:8px;color:var(--ink-2);font-size:16px}
+.feat{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;margin-top:40px;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--line)}
+.feat>div{padding:24px 22px 26px;background:var(--panel)}
+.feat svg{display:block;width:26px;height:26px;margin-bottom:14px;color:var(--navy)}
+/* safety: the second navy band */
+.safe{background:var(--navy);color:#fff}
+.safe .lead{color:rgba(255,255,255,.8)}
+.trust{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 48px;margin-top:36px}
+.trust>div{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;padding:20px 0;border-top:1px solid rgba(255,255,255,.16)}
+.trust svg{grid-row:span 2;width:22px;height:22px;margin-top:3px;color:var(--gold)}
+.trust b{font-size:17px;font-weight:650}.trust span{grid-column:2;color:rgba(255,255,255,.76);font-size:16px}
+.faq{max-width:800px;margin-top:30px;border-bottom:1px solid var(--line-2)}
+details{border-top:1px solid var(--line-2)}
+summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;font-size:17px;font-weight:650;cursor:pointer;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";flex:none;width:22px;color:var(--mute);font-size:24px;font-weight:400;line-height:1;text-align:center}
+details[open] summary::after{content:"–"}
+details p{max-width:66ch;padding:0 0 20px;color:var(--ink-2)}
+.final{background:var(--gold);color:var(--navy)}
+.final .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px 40px;flex-wrap:wrap}
+.final h2{font-size:clamp(28px,4vw,46px)}.final p{margin-top:10px;font-size:18px}
+.final .btn{background:var(--navy);border-color:var(--navy);color:#fff;height:52px;padding:0 28px;font-size:17px}.final .btn:hover{background:var(--navy-2)}
+.final :focus-visible{outline-color:var(--navy)}
+footer{padding:26px 0;border-top:1px solid var(--line);color:var(--mute);font-size:14.5px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+@media (max-width:980px){
+  .ladder{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:8px}.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.steps li{padding-bottom:10px}
+  .feat{grid-template-columns:repeat(2,minmax(0,1fr))}.shot .c-loc{display:none}
+}
+@media (max-width:680px){
+  body{font-size:16px}.links{display:none}nav .wrap{justify-content:space-between}
+  .hero{padding-top:52px}.hero .pitch{font-size:17px}
+  .ladder{grid-template-columns:repeat(2,minmax(0,1fr))}.trust,.feat,.steps{grid-template-columns:minmax(0,1fr)}
+  section{padding-block:60px}.shotwrap{margin-top:44px}
+  .sbar span:not(.on),.shot .c-stage span,.shot .c-act,.mt u{display:none}.shot th,.shot td{padding-inline:14px}.shead{padding-inline:14px}
+  .shot td{white-space:normal}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="top" id="top">
+  <nav aria-label="Primary"><div class="wrap"><a class="brand" href="#top"><span data-logo></span><span data-name>OfferPilot</span></a>
+    <div class="links"><a href="#how">How it works</a><a href="#features">Features</a><a href="#trust">Safety</a><a href="#faq">Questions</a></div>
+    <a class="btn primary sm" href="/">Open the app</a></div></nav>
+  <header class="hero wrap">
+    <h1>Land interviews, not busywork.</h1>
+    <p class="pitch" data-pitch>Finds the right jobs, writes a tailored resume and cover letter for each one, and helps you apply — while you stay in control of every send.</p>
+    <div class="cta"><a class="btn primary" href="/">Get started</a><a class="btn onnavy" href="#how">See how it works</a></div>
+    <ol class="ladder" aria-label="The stages of a job, from match to offer">
+      <li><span class="ep" aria-hidden="true"><i></i><i></i><i></i><i></i></span><b>Matched</b><span>Scored against your resume</span></li>
+      <li><span class="ep" aria-hidden="true"><i class="on" style="--n:0"></i><i></i><i></i><i></i></span><b>Ready for you</b><span>Written, checked, waiting for your OK</span></li>
+      <li><span class="ep" aria-hidden="true"><i class="on" style="--n:1"></i><i class="on" style="--n:2"></i><i></i><i></i></span><b>Applied</b><span>Sent only after you approve</span></li>
+      <li><span class="ep" aria-hidden="true"><i class="on" style="--n:3"></i><i class="on" style="--n:4"></i><i class="on" style="--n:5"></i><i></i></span><b>Interview</b><span>Prep kit and practice ready</span></li>
+      <li><span class="ep" aria-hidden="true"><i class="on" style="--n:6"></i><i class="on" style="--n:7"></i><i class="on" style="--n:8"></i><i class="on" style="--n:9"></i></span><b>Offer</b><span>Compared and negotiated</span></li>
+    </ol>
+  </header>
+  <div class="shotwrap"><div class="wrap"><div class="shot" aria-hidden="true">
+    <div class="sbar"><span data-logo style="padding:0"></span><b data-name>OfferPilot</b><span>Dashboard</span><span class="on">Jobs</span><span>Applications</span><span>Interviews</span><span>Inbox</span><em>Find new jobs</em></div>
+    <div class="shead"><b>Jobs</b><span>Matched roles, prepared applications and everything in between</span></div>
+    <table><thead><tr><th>Job</th><th class="c-stage">Stage</th><th class="c-loc">Location</th><th>Match</th><th class="c-act"></th></tr></thead><tbody>
+      <tr><td><b>Detection Engineer</b><small>Globex</small></td><td class="c-stage"><span class="st"><span class="ep"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span>Interview</span></span></td><td class="c-loc">Remote, India</td><td><span class="mt"><u><i style="width:82%"></i></u>82</span></td><td class="c-act"><span class="act">Open</span></td></tr>
+      <tr><td><b>Security Operations Analyst</b><small>Acme Cloud</small></td><td class="c-stage"><span class="st"><span class="ep"><i class="on"></i><i class="on"></i><i></i><i></i></span><span>Applied</span></span></td><td class="c-loc">Pune</td><td><span class="mt"><u><i style="width:78%"></i></u>78</span></td><td class="c-act"><span class="act">Open</span></td></tr>
+      <tr><td><b>Cloud Security Engineer</b><small>Initech</small></td><td class="c-stage"><span class="st"><span class="ep"><i class="on"></i><i></i><i></i><i></i></span><span>Ready for you</span></span></td><td class="c-loc">Bengaluru</td><td><span class="mt"><u><i style="width:74%"></i></u>74</span></td><td class="c-act"><span class="act">Review</span></td></tr>
+      <tr><td><b>Application Security Engineer</b><small>Soylent Systems</small></td><td class="c-stage"><span class="st"><span class="ep"><i></i><i></i><i></i><i></i></span><span>New</span></span></td><td class="c-loc">Remote</td><td><span class="mt"><u><i style="width:66%"></i></u>66</span></td><td class="c-act"><span class="act">Prepare</span></td></tr>
+    </tbody></table>
+  </div></div></div>
+</div>
+<main>
+  <section id="how"><div class="wrap"><h2>From “I should apply” to “applied” in four steps</h2>
+    <p class="lead">Upload your resume once. The copilot does the searching, reading and writing; you make the decisions.</p>
+    <ol class="steps">
+      <li><h3>Upload your resume</h3><p>It reads your experience, skills and projects, and checks every extracted fact against your file.</p></li>
+      <li><h3>Get matched</h3><p>Roles come from job boards, company career sites and the job-alert emails already in your inbox, each scored against you.</p></li>
+      <li><h3>Review tailored applications</h3><p>A resume and cover letter written for each job, with every change highlighted. Edit anything, then approve.</p></li>
+      <li><h3>Apply and follow through</h3><p>Sends by email or guides you through the company's form, reads recruiter replies, drafts responses and prepares you for interviews.</p></li>
+    </ol></div></section>
+
+  <section id="features" style="padding-top:0"><div class="wrap"><h2>Everything a serious job search needs</h2>
+    <div class="feat">
+      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><h3>Jobs from everywhere that's allowed</h3><p>Remote boards, public company career sites, and your LinkedIn, Naukri and Glassdoor alert emails, without scraping accounts that get banned.</p></div>
+      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="m9 12 2 2 4-4" stroke-linecap="round"/></svg><h3>Tailoring that never lies</h3><p>Every resume and letter passes a fact-checker. A skill that isn't in your profile can't appear as yours; it's shown to you as a gap instead.</p></div>
+      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 4.5-5.5"/></svg><h3>A verdict on every job</h3><p>“Should I apply?” answered with reasons: what you cover, what's missing, and the experience asked against yours.</p></div>
+      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg><h3>An inbox that works for you</h3><p>Recruiter replies are sorted into interviews, questions and rejections, linked to the right application, with reply drafts ready.</p></div>
+      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg><h3>Outreach to the people who hire</h3><p>A personal email and a tailored CV for a recruiter you found. You approve every send, within a daily limit, with one polite follow-up.</p></div>
+      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><h3>Interview prep for each job</h3><p>Likely questions with talking points from your real experience, practice with feedback, and offers compared side by side.</p></div>
+      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2"/></svg><h3>Company research</h3><p>Hiring momentum, recent news and public security signals for every employer: the context that wins interviews.</p></div>
+      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M8 17v-5M13 17V8M18 17v-9"/></svg><h3>Insights that tell you what to learn</h3><p>Which skills employers ask for most, where you match and where you don't, pay by role and city, and how your search converts.</p></div>
+    </div></div></section>
+
+  <section id="trust" class="safe"><div class="wrap"><h2>You stay in control</h2>
+    <p class="lead">Built so it can't embarrass you, spam recruiters or put your accounts at risk.</p>
+    <div class="trust">
+      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg><b>Nothing sends without you</b><span>Every application waits for your approval. Practice mode lets you try everything first.</span></div>
+      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg><b>Grounded in your real experience</b><span>A fact-checker blocks invented skills, employers, years or numbers before you ever see them.</span></div>
+      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg><b>Minimal Gmail access</b><span>Send and read-only permissions. Only job-related mail is read; everything else is ignored and never stored.</span></div>
+      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg><b>No account-risking automation</b><span>LinkedIn, Naukri and Glassdoor are never automated. Their jobs come in through the alert emails you already get.</span></div>
+    </div></div></section>
+
+  <section id="faq"><div class="wrap"><h2>Questions</h2>
+    <div class="faq">
+      <details><summary>Will it apply to jobs without asking me?</summary><p>No. Every application is prepared and then waits for your approval. There's an optional Autopilot for very strong email matches with a daily cap, and it's off by default.</p></details>
+      <details><summary>Can it make things up on my resume?</summary><p>No. Tailoring can only select and rephrase facts from your own profile. A checker rejects anything it can't trace back to your resume: skills, tools, numbers or years of experience.</p></details>
+      <details><summary>Does it work with LinkedIn?</summary><p>Yes, through LinkedIn job-alert emails in your Gmail. It doesn't log into or scrape LinkedIn, because that gets personal accounts banned.</p></details>
+      <details><summary>Where is my data?</summary><p>On your own computer. Your profile, jobs and emails are stored locally, and the AI that writes your applications can run locally too. If you choose Claude instead, the text needed for each application is sent to Anthropic's API.</p></details>
+      <details><summary>What does it cost?</summary><p>It's free while in early access.</p></details>
+    </div></div></section>
+
+  <section class="final"><div class="wrap"><div><h2>Ready for your next role?</h2><p>Upload a resume and see your first matches the same day.</p></div>
+    <a class="btn" href="/">Open the app</a></div></section>
+</main>
+<footer><div class="wrap"><span>© <span id="yr"></span> <span data-name>OfferPilot</span></span><span data-support></span></div></footer>
+<script>
+  const B = window.BRAND || {};
+  document.querySelectorAll("[data-name]").forEach(e => e.textContent = B.name || e.textContent);
+  document.querySelectorAll("[data-logo]").forEach(e => e.innerHTML = B.logo || "");
+  document.querySelectorAll("[data-pitch]").forEach(e => e.textContent = B.pitch || e.textContent);
+  document.querySelectorAll("[data-support]").forEach(e => e.textContent = B.support ? "Support: " + B.support : "");
+  document.getElementById("yr").textContent = new Date().getFullYear();
+  if (B.name) document.title = `${B.name} — ${B.tagline}`;
+</script>
+</body>
+</html>
